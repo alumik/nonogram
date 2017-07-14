@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/game">
+        <file alias="icon-white">images/icon_white_new.png</file>
+    </qresource>
+    <qresource prefix="/button">
+        <file alias="icon-button">images/icon_button.png</file>
+    </qresource>
+    <qresource prefix="/cursor">
+        <file alias="tool">images/cursor.png</file>
+    </qresource>
+</RCC>
