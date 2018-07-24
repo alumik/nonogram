@@ -8,7 +8,7 @@
 using namespace std;
 
 extern GameWindow* gameWindow;
-extern StackedWindow* stackedWindow;
+extern StackedWindow* global_stacked_window;
 extern int nonogramIndex;
 
 bool canLoad() {
@@ -33,9 +33,9 @@ void loadGame() {
 	}
 	gameWindow = new GameWindow;
 	gameWindow->show();
-	stackedWindow->hide();
+	global_stacked_window->hide();
 
-	Nonogram* nonogram = gameWindow->gameWidget;
+	Nonogram* nonogram = gameWindow->game_widget;
 	for (int r = nonogram->hintRow + 1; r < nonogram->rowCount(); r++) {
 		for (int c = nonogram->hintColumn + 1; c < nonogram->columnCount(); c++) {
 			int state;
@@ -51,6 +51,6 @@ void loadGame() {
 			}
 		}
 	}
-	gameWindow->btnReset->setDisabled(false);
+	gameWindow->btn_reset->setDisabled(false);
 	loader.close();
 }

@@ -14,11 +14,11 @@
 static const QDate buildDate = QLocale(QLocale::English).toDate(QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
 static const QTime buildTime = QTime::fromString(__TIME__, "hh:mm:ss");
 
-extern StackedWindow* stackedWindow;
+extern StackedWindow* global_stacked_window;
 extern bool canLoad();
 extern void loadGame();
 
-MenuButton* gBtnResume;
+MenuButton* global_btn_resume;
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	btnStart = new MenuButton(tr("开始游戏"), this);
 	connect(btnStart, &QPushButton::clicked, this, &MainWindow::showLvSelecter);
 
-	gBtnResume = btnResume = new MenuButton(tr("继续游戏"), this);
+	global_btn_resume = btnResume = new MenuButton(tr("继续游戏"), this);
 	btnResume->setDisabled(canLoad());
 	connect(btnResume, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
 
@@ -98,10 +98,10 @@ void MainWindow::showLvSelecter() {
 		InfoWindow info(tr("<center>您还有未完成的游戏<br>开始新游戏将删除现有游戏进度<br>是否继续？</center>"), 2, this);
 		int r = info.exec();
 		if (r == QDialog::Accepted) {
-			stackedWindow->setIndex(1);
+			global_stacked_window->setIndex(1);
 		}
 	} else {
-		stackedWindow->setIndex(1);
+		global_stacked_window->setIndex(1);
 	}
 }
 

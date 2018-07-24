@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QFontDatabase>
 
-StackedWindow* stackedWindow;
+StackedWindow* global_stacked_window;
 GameWindow* gameWindow;
 
 int main(int argc, char *argv[]) {
@@ -20,8 +20,8 @@ int main(int argc, char *argv[]) {
 	QFontDatabase::addApplicationFont("win7support.style"); //Microsoft YaHei UI Regular (for Windows 7)
 	QFontDatabase::addApplicationFont("win7supportbd.style"); //Microsoft YaHei UI Bold (for Windows 7)
 
-	stackedWindow = new StackedWindow;
-	stackedWindow->show();
+	global_stacked_window = new StackedWindow;
+	global_stacked_window->show();
 
 	return app.exec();
 }

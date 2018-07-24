@@ -27,8 +27,8 @@ public:
 	int gameColumn;
 	int hintRow;
 	int hintColumn;
-	int tableSizeW;
-	int tableSizeH;
+	int table_width;
+	int table_height;
 	NonogramPreview* nonogramPreview;
 	void checkLineComplete(int r, int c);
 	bool complete;

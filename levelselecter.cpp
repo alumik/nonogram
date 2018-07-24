@@ -6,9 +6,9 @@
 
 #include <cstdio>
 
-extern StackedWindow* stackedWindow;
+extern StackedWindow* global_stacked_window;
 extern GameWindow* gameWindow;
-extern MenuButton* gBtnResume;
+extern MenuButton* global_btn_resume;
 
 int nonogramIndex;
 
@@ -87,14 +87,14 @@ void LevelSelecter::startGame() {
 	}
 
 	remove("save.nonogram");
-	gBtnResume->setDisabled(true);
+	global_btn_resume->setDisabled(true);
 	gameWindow = new GameWindow;
 	gameWindow->show();
-	stackedWindow->hide();
+	global_stacked_window->hide();
 }
 
 void LevelSelecter::showMain() {
-	stackedWindow->setIndex(0);
+	global_stacked_window->setIndex(0);
 }
 
 LevelSelecter::~LevelSelecter() {
