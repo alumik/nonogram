@@ -59,7 +59,9 @@ Nonogram::Nonogram(QWidget* parent) : QTableWidget(parent) {
 	mousePressed = false;
 	setMouseTracking(true);
 	verticalHeader()->hide();
+    verticalHeader()->setMinimumSectionSize(1);
 	horizontalHeader()->hide();
+    horizontalHeader()->setMinimumSectionSize(1);
 	setFocusPolicy(Qt::NoFocus);
 	setSelectionMode(QTableWidget::NoSelection);
 	setEditTriggers(QAbstractItemView::NoEditTriggers);

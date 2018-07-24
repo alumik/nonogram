@@ -17,7 +17,9 @@ NonogramPreview::NonogramPreview(int pGameRow,
 
 	setShowGrid(false);
 	verticalHeader()->hide();
+    verticalHeader()->setMinimumSectionSize(1);
 	horizontalHeader()->hide();
+    horizontalHeader()->setMinimumSectionSize(1);
 	setFocusPolicy(Qt::NoFocus);
 	setFrameShape(QFrame::NoFrame);
 	setSelectionMode(QTableWidget::NoSelection);

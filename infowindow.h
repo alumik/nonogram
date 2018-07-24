@@ -33,7 +33,7 @@ private slots:
 
 protected:
 	void mousePressEvent(QMouseEvent* event);
-	bool nativeEvent(const QByteArray& eventType, void* message, long* result);
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 	void showEvent(QShowEvent* event);
 
 signals:

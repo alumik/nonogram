@@ -1,4 +1,4 @@
-﻿@echo off 
+@echo off 
 set /p var= <build.txt 
 set /a var= %var%+1 
 echo %var% >build.txt

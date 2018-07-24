@@ -9,10 +9,10 @@ InfoWindow::InfoWindow(QString content, int btnCount, QWidget *parent)
 	: QDialog(parent) {
 
 	//设置窗口颜色
-	QPalette pal = palette();
+    QPalette pal = palette();
 	pal.setColor(QPalette::Background, DARK_COLOR);
 	setAutoFillBackground(true);
-	setPalette(pal);
+    setPalette(pal);
 
 	//无边框模式
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -108,10 +108,10 @@ void InfoWindow::showEvent(QShowEvent *event) {
 
 //窗口失焦闪烁信号
 bool InfoWindow::nativeEvent(const QByteArray& eventType, void* message, long* result) {
-	MSG* msg = static_cast<MSG*>(message);
-	if(msg->message == WM_NCACTIVATE) {
+    MSG* msg = static_cast<MSG*>(message);
+    if(msg->message == WM_NCACTIVATE) {
 		emit ncActive((bool)(msg->wParam));
-	}
+    }
 	return QWidget::nativeEvent(eventType, message, result);
 }
 
@@ -126,7 +126,7 @@ void InfoWindow::flashWindow(bool active) {
 
 InfoWindow::~InfoWindow() {
 	delete layoutBtn;
-	layoutBtn = NULL;
+    layoutBtn = NULL;
 	delete layoutDialog;
 	layoutDialog = NULL;
 }
