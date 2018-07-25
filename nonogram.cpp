@@ -1,10 +1,10 @@
 ﻿#include "nonogram.h"
 #include "define.h"
 #include "nonogram_data.h"
-#include "game_window.h"
+#include "window_game.h"
 #include "nonogram_preview.h"
-#include "pixelfont.h"
-#include "info_window.h"
+#include "util_pixel_font.h"
+#include "window_info.h"
 
 #include <QHeaderView>
 #include <cstdio>

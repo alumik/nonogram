@@ -1,6 +1,6 @@
-﻿#include "info_window.h"
+﻿#include "window_info.h"
 #include "define.h"
-#include "pixelfont.h"
+#include "util_pixel_font.h"
 
 #include <windows.h>
 #include <QPropertyAnimation>

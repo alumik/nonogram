@@ -1,5 +1,5 @@
-﻿#ifndef PIXELFONT_H
-#define PIXELFONT_H
+﻿#ifndef UTIL_PIXEL_FONT_H
+#define UTIL_PIXEL_FONT_H
 
 #include <QFont>
 
@@ -12,4 +12,4 @@ public:
                        bool italic = false);
 };
 
-#endif // PIXELFONT_H
+#endif // UTIL_PIXEL_FONT_H

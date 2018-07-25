@@ -1,5 +1,5 @@
-﻿#include "stacked_window.h"
-#include "game_window.h"
+﻿#include "window_stacked.h"
+#include "window_game.h"
 
 #include <QApplication>
 #include <QFontDatabase>

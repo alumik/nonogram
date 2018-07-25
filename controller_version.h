@@ -1,12 +1,12 @@
-﻿#ifndef VERSION_H
-#define VERSION_H
+﻿#ifndef CONTROLLER_VERSION_H
+#define CONTROLLER_VERSION_H
 
 #include "build_number.h"
 
 #include <QDateTime>
 #include <QLocale>
 
-class Version {
+class VersionController {
 
 public:
     static QString getVersion();
@@ -19,4 +19,4 @@ private:
     static const bool RELEASE_STATE;
 };
 
-#endif // VERSION_H
+#endif // CONTROLLER_VERSION_H

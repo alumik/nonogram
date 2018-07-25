@@ -1,8 +1,8 @@
-﻿#ifndef STACKED_WINDOW_H
-#define STACKED_WINDOW_H
+﻿#ifndef WINDOW_STACKED_H
+#define WINDOW_STACKED_H
 
-#include "main_window.h"
-#include "level_selector.h"
+#include "window_main.h"
+#include "window_level_selector.h"
 
 #include <QStackedLayout>
 
@@ -19,8 +19,8 @@ public:
 
 private:
 	MainWindow* main_window;
-    LevelSelector* level_selector;
+    LevelSelectorWindow* level_selector;
 	QStackedLayout* layout_this;
 };
 
-#endif // STACKED_WINDOW_H
+#endif // WINDOW_STACKED_H

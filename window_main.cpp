@@ -1,9 +1,9 @@
-﻿#include "main_window.h"
+﻿#include "window_main.h"
 #include "define.h"
-#include "version.h"
-#include "stacked_window.h"
-#include "info_window.h"
-#include "pixelfont.h"
+#include "controller_version.h"
+#include "window_stacked.h"
+#include "window_info.h"
+#include "util_pixel_font.h"
 
 #include <QApplication>
 #include <QPixmap>
@@ -85,8 +85,8 @@ void MainWindow::showAbout() {
                        "编译时间：%2\n\n"
 					   "开发者：钟震宇\n"
                        "联系方式：nczzy1997@gmail.com")
-                    .arg(Version::getVersion())
-                    .arg(Version::getBulidDateTime()),
+                    .arg(VersionController::getVersion())
+                    .arg(VersionController::getBulidDateTime()),
 					1,
 					this);
 	info.exec();

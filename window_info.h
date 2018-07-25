@@ -1,7 +1,7 @@
-﻿#ifndef INFO_WINDOW_H
-#define INFO_WINDOW_H
+﻿#ifndef WINDOW_INFO_H
+#define WINDOW_INFO_H
 
-#include "menu_button.h"
+#include "button_menu.h"
 
 #include <QDialog>
 #include <QLabel>
@@ -39,4 +39,4 @@ signals:
 	void ncActive(bool active);
 };
 
-#endif // INFO_WINDOW_H
+#endif // WINDOW_INFO_H

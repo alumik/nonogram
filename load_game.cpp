@@ -1,7 +1,7 @@
 ﻿#include "define.h"
-#include "stacked_window.h"
+#include "window_stacked.h"
 #include "nonogram_preview.h"
-#include "game_window.h"
+#include "window_game.h"
 
 #include <fstream>
 

@@ -1,7 +1,7 @@
-﻿#ifndef MAIN_WINDOW_H
-#define MAIN_WINDOW_H
+﻿#ifndef WINDOW_MAIN_H
+#define WINDOW_MAIN_H
 
-#include "menu_button.h"
+#include "button_menu.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
@@ -33,4 +33,4 @@ private slots:
     static void loadGameSlot();
 };
 
-#endif // MAIN_WINDOW_H
+#endif // WINDOW_MAIN_H

@@ -1,19 +1,19 @@
-﻿#ifndef LEVEL_SELECTOR_H
-#define LEVEL_SELECTOR_H
+﻿#ifndef WINDOW_LEVEL_SELECTOR_H
+#define WINDOW_LEVEL_SELECTOR_H
 
-#include "menu_button.h"
+#include "button_menu.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
 
 extern int global_nonogram_index;
 
-class LevelSelector : public QWidget {
+class LevelSelectorWindow : public QWidget {
 	Q_OBJECT
 
 public:
-    explicit LevelSelector(QWidget* parent = nullptr);
-    ~LevelSelector();
+    explicit LevelSelectorWindow(QWidget* parent = nullptr);
+    ~LevelSelectorWindow();
 
 private:
 	QLabel* label_title;
@@ -32,4 +32,4 @@ private slots:
 	static void showMain();
 };
 
-#endif // LEVEL_SELECTOR_H
+#endif // WINDOW_LEVEL_SELECTOR_H

@@ -28,37 +28,39 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        main_window.cpp \
-    game_window.cpp \
-    level_selector.cpp \
-    stacked_window.cpp \
-    tool_button.cpp \
     nonogram.cpp \
-    menu_button.cpp \
     line_reader.cpp \
     nonogram_data.cpp \
     nonogram_preview.cpp \
     save_game.cpp \
     load_game.cpp \
-    info_window.cpp \
-    pixelfont.cpp \
-    version.cpp
+    window_game.cpp \
+    controller_version.cpp \
+    controller_game.cpp \
+    button_tool.cpp \
+    window_stacked.cpp \
+    button_menu.cpp \
+    window_main.cpp \
+    util_pixel_font.cpp \
+    window_level_selector.cpp \
+    window_info.cpp
 
 HEADERS += \
-        main_window.h \
-    game_window.h \
-    level_selector.h \
-    stacked_window.h \
     define.h \
     nonogram_data.h \
-    tool_button.h \
     nonogram.h \
-    menu_button.h \
     build_number.h \
     nonogram_preview.h \
-    info_window.h \
-    pixelfont.h \
-    version.h
+    window_game.h \
+    controller_version.h \
+    button_tool.h \
+    window_info.h \
+    window_stacked.h \
+    util_pixel_font.h \
+    window_level_selector.h \
+    window_main.h \
+    button_menu.h \
+    controller_game.h
 
 RC_ICONS = images\icon_dark_new.ico
 

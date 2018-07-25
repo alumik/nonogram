@@ -1,9 +1,9 @@
-﻿#ifndef GAME_WINDOW_H
-#define GAME_WINDOW_H
+﻿#ifndef WINDOW_GAME_H
+#define WINDOW_GAME_H
 
 #include "nonogram.h"
-#include "tool_button.h"
-#include "menu_button.h"
+#include "button_tool.h"
+#include "button_menu.h"
 
 #include <QHBoxLayout>
 #include <QPixmap>
@@ -63,4 +63,4 @@ private slots:
 	void checkedCross();
 };
 
-#endif // GAME_WINDOW_H
+#endif // WINDOW_GAME_H

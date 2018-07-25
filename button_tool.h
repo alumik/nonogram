@@ -1,5 +1,5 @@
-﻿#ifndef TOOL_BUTTON_H
-#define TOOL_BUTTON_H
+﻿#ifndef BUTTON_TOOL_H
+#define BUTTON_TOOL_H
 
 #include <QPushButton>
 
@@ -14,4 +14,4 @@ public:
                bool no_accent_color = false);
 };
 
-#endif // TOOL_BUTTON_H
+#endif // BUTTON_TOOL_H

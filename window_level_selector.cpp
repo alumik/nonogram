@@ -1,8 +1,8 @@
-﻿#include "level_selector.h"
+﻿#include "window_level_selector.h"
 #include "define.h"
-#include "stacked_window.h"
-#include "game_window.h"
-#include "pixelfont.h"
+#include "window_stacked.h"
+#include "window_game.h"
+#include "util_pixel_font.h"
 
 #include <cstdio>
 
@@ -16,7 +16,7 @@ int global_nonogram_index; // 网格化序号
  * \brief 关卡选择器
  * \param parent 父部件指针
  */
-LevelSelector::LevelSelector(QWidget* parent) : QWidget(parent) {
+LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {
 	// 创建游戏标题
 	label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
 	label_game_name->setFont(PixelFont("Berlin Sans FB", 40, 50));
@@ -27,24 +27,24 @@ LevelSelector::LevelSelector(QWidget* parent) : QWidget(parent) {
 
 	// 创建按钮
 	btn_mini = new MenuButton(tr("音符 [10x10]"), this);
-	connect(btn_mini, &QPushButton::clicked, this, &LevelSelector::startGame);
+    connect(btn_mini, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
 	btn_small = new MenuButton(tr("Android [15x19]"), this);
-	connect(btn_small, &QPushButton::clicked, this, &LevelSelector::startGame);
+    connect(btn_small, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
 	btn_medium = new MenuButton(tr("狗 [20x20]"), this);
-	connect(btn_medium, &QPushButton::clicked, this, &LevelSelector::startGame);
+    connect(btn_medium, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
 	btn_large = new MenuButton(tr("公鸡 [30x30]"), this);
-	connect(btn_large, &QPushButton::clicked, this, &LevelSelector::startGame);
+    connect(btn_large, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
 	btn_test = new MenuButton(tr("测试"), this, true);
 	btn_test->setFixedWidth(NAVBUTTON_WIDTH);
-	connect(btn_test, &QPushButton::clicked, this, &LevelSelector::startGame);
+    connect(btn_test, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
 	btn_back = new MenuButton(tr("返回"), this, true);
 	btn_back->setFixedWidth(NAVBUTTON_WIDTH);
-	connect(btn_back, &QPushButton::clicked, this, &LevelSelector::showMain);
+    connect(btn_back, &QPushButton::clicked, this, &LevelSelectorWindow::showMain);
 
 	// 创建按钮布局
     layout_btn = new QHBoxLayout();
@@ -73,7 +73,7 @@ LevelSelector::LevelSelector(QWidget* parent) : QWidget(parent) {
 /**
  * \brief 开始游戏
  */
-void LevelSelector::startGame() const {
+void LevelSelectorWindow::startGame() const {
 	if (sender() == btn_mini) {
 		global_nonogram_index = 1;
 	} else if (sender() == btn_small) {
@@ -101,14 +101,14 @@ void LevelSelector::startGame() const {
 /**
  * \brief 显示主界面
  */
-void LevelSelector::showMain() {
+void LevelSelectorWindow::showMain() {
 	global_stacked_window->setIndex(0);
 }
 
 /**
  * \brief 析构函数
  */
-LevelSelector::~LevelSelector() {
+LevelSelectorWindow::~LevelSelectorWindow() {
 	delete layout_btn;
 	layout_btn = nullptr;
 	delete layout_this;

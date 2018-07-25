@@ -1,8 +1,8 @@
-﻿#include "game_window.h"
+﻿#include "window_game.h"
 #include "define.h"
-#include "stacked_window.h"
-#include "info_window.h"
-#include "pixelfont.h"
+#include "window_stacked.h"
+#include "window_info.h"
+#include "util_pixel_font.h"
 
 #include <QPalette>
 #include <QIcon>

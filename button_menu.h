@@ -1,5 +1,5 @@
-﻿#ifndef MENU_BUTTON_H
-#define MENU_BUTTON_H
+﻿#ifndef BUTTON_MENU_H
+#define BUTTON_MENU_H
 
 #include <QPushButton>
 
@@ -12,4 +12,4 @@ public:
                         bool no_accent_color = false);
 };
 
-#endif // MENU_BUTTON_H
+#endif // BUTTON_MENU_H

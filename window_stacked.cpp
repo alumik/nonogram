@@ -1,4 +1,4 @@
-﻿#include "stacked_window.h"
+﻿#include "window_stacked.h"
 #include "define.h"
 
 #include <QPalette>
@@ -22,7 +22,7 @@ StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
 
 	// 创建主界面和游戏选择界面
 	main_window = new MainWindow(this);
-    level_selector = new LevelSelector(this);
+    level_selector = new LevelSelectorWindow(this);
 
 	// 创建布局
     layout_this = new QStackedLayout();
