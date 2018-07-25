@@ -9,8 +9,6 @@
 #include <QApplication>
 #include <QPixmap>
 
-extern void loadGame();
-
 /**
  * \brief 游戏主窗口
  * \param parent 父部件指针
@@ -109,7 +107,7 @@ void MainWindow::showLevelSelector() {
  * \brief 加载游戏
  */
 void MainWindow::onLoadGame() {
-	loadGame();
+    GameController::loadGame();
 }
 
 void MainWindow::checkBtnLoad() {

@@ -13,9 +13,9 @@ public:
 
     static void setBackgroundColor(QWidget* widget, QColor color);
     static bool canLoadGame();
-
-    static void loadGame(){}
+    static void loadGame();
     static void startGame();
+
     static QVector<int> readRow(const int row, Nonogram* nonogram){}
     static QVector<int> readColumn(const int column, Nonogram* nonogram){}
     static QVector<int> readHintRow(const int row, Nonogram* nonogram){}

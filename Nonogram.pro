@@ -32,7 +32,6 @@ SOURCES += \
     line_reader.cpp \
     nonogram_data.cpp \
     nonogram_preview.cpp \
-    load_game.cpp \
     window_game.cpp \
     controller_version.cpp \
     controller_game.cpp \
