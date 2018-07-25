@@ -46,10 +46,8 @@ SOURCES += \
     window_info.cpp
 
 HEADERS += \
-    define.h \
     nonogram_data.h \
     nonogram.h \
-    build_number.h \
     nonogram_preview.h \
     window_game.h \
     controller_version.h \
@@ -60,7 +58,9 @@ HEADERS += \
     window_level_selector.h \
     window_main.h \
     button_menu.h \
-    controller_game.h
+    controller_game.h \
+    util_build_number.h \
+    util_generic_define.h
 
 RC_ICONS = images\icon_dark_new.ico
 

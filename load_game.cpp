@@ -1,29 +1,14 @@
-﻿#include "define.h"
+﻿#include "util_generic_define.h"
 #include "window_stacked.h"
 #include "nonogram_preview.h"
 #include "window_game.h"
+#include "controller_game.h"
 
 #include <fstream>
 
 using namespace std;
 
-extern GameWindow* global_game_window;
-extern StackedWindow* global_stacked_window;
 extern int global_nonogram_index;
-
-/**
- * \brief 判断是否能够载入
- * \return 
- */
-bool canLoad() {
-	fstream test;
-	test.open("save.nonogram", ios::in);
-	if (!test) {
-        return false;
-	}
-	test.close();
-    return true;
-}
 
 /**
  * \brief 载入游戏
@@ -34,15 +19,15 @@ void loadGame() {
 	loader >> global_nonogram_index;
 
 	// 初始化游戏
-	if (global_game_window) {
-		delete global_game_window;
-		global_game_window = nullptr;
+    if (GameController::game_window) {
+        delete GameController::game_window;
+        GameController::game_window = nullptr;
 	}
-	global_game_window = new GameWindow;
-	global_game_window->show();
-	global_stacked_window->hide();
+    GameController::game_window = new GameWindow;
+    GameController::game_window->show();
+    GameController::stacked_window->hide();
 
-	auto nonogram = global_game_window->game_widget;
+    auto nonogram = GameController::game_window->game_widget;
 	for (auto r = nonogram->hint_row + 1; r < nonogram->rowCount(); r++) {
 		for (auto c = nonogram->hint_column + 1; c < nonogram->columnCount(); c++) {
 			int state;
@@ -59,6 +44,6 @@ void loadGame() {
 			}
 		}
 	}
-	global_game_window->btn_reset->setDisabled(false);
+    GameController::game_window->btn_reset->setDisabled(false);
 	loader.close();
 }

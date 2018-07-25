@@ -1,4 +1,4 @@
-﻿#include "define.h"
+﻿#include "util_generic_define.h"
 #include "nonogram_data.h"
 #include "nonogram.h"
 

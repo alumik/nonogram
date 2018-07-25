@@ -1,7 +1,6 @@
-﻿#include "window_stacked.h"
-#include "define.h"
-
-#include <QPalette>
+﻿#include "controller_game.h"
+#include "util_generic_define.h"
+#include "window_stacked.h"
 
 /**
  * \brief 层叠式窗口
@@ -12,10 +11,7 @@ StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
 	setWindowTitle(tr("Nonogram"));
 
 	// 设置窗口颜色
-	auto pal = palette();
-	pal.setColor(QPalette::Background, DARK_COLOR);
-	setAutoFillBackground(true);
-	setPalette(pal);
+    GameController::setBackgroundColor(this, DARK_COLOR);
 
 	// 设置初始窗口大小
 	resize(DEFAULT_WINDOW_SIZE);

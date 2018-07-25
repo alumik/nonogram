@@ -1,5 +1,5 @@
 ﻿#include "nonogram.h"
-#include "define.h"
+#include "util_generic_define.h"
 
 #include <fstream>
 

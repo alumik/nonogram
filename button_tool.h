@@ -11,7 +11,7 @@ public:
                const QString& tip,
                QWidget* parent = nullptr,
                bool checkable = false,
-               bool no_accent_color = false);
+               bool accent_color = true);
 };
 
 #endif // BUTTON_TOOL_H

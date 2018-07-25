@@ -1,11 +1,7 @@
-﻿#include "window_stacked.h"
-#include "window_game.h"
+﻿#include "controller_game.h"
 
 #include <QApplication>
 #include <QFontDatabase>
-
-StackedWindow* global_stacked_window;
-GameWindow* global_game_window;
 
 /**
  * \brief 入口函数
@@ -27,8 +23,8 @@ int main(int argc, char* argv[]) {
 	QFontDatabase::addApplicationFont("win7supportbd.style"); // Microsoft YaHei UI Bold (for Windows 7)
 
     // 显示窗口
-    global_stacked_window = new StackedWindow();
-	global_stacked_window->show();
+    GameController::stacked_window = new StackedWindow();
+    GameController::stacked_window->show();
 
 	return QApplication::exec();
 }

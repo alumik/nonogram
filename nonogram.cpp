@@ -1,16 +1,16 @@
 ﻿#include "nonogram.h"
-#include "define.h"
+#include "util_generic_define.h"
 #include "nonogram_data.h"
 #include "window_game.h"
 #include "nonogram_preview.h"
 #include "util_pixel_font.h"
 #include "window_info.h"
+#include "controller_game.h"
 
 #include <QHeaderView>
 #include <cstdio>
 
 extern int global_nonogram_index;
-extern GameWindow* global_game_window;
 extern MenuButton* global_btn_resume;
 
 extern QVector<int> readRow(int r, Nonogram* nonogram);
@@ -389,15 +389,15 @@ void Nonogram::mouseReleaseEvent(QMouseEvent *event) {
 		min_c = min_c < hint_column  + 1 ? hint_column + 1 : min_c;
 		eraseAreaHighlight();
 		if (canAct(current_r, current_c) && canAct(record_r, record_c)) {
-            switch (global_game_window->tool_type) {
+            switch (GameController::game_window->tool_type) {
 				case 0:
 					for (auto r = min_r; r <= max_r; r++) {
 						for (auto c = min_c; c <= max_c; c++) {
 							if (canAct(r, c)) {
 								if (item(r, c)->backgroundColor() != DARK_COLOR) {
 									record(r, c, DARK_COLOR, QString(""));
-	                                global_game_window->btn_reset->setDisabled(false);
-									global_game_window->setWindowModified(true);
+                                    GameController::game_window->btn_reset->setDisabled(false);
+                                    GameController::game_window->setWindowModified(true);
 								}
 								item(r, c)->setBackgroundColor(DARK_COLOR);
 								item(r, c)->setText(QString(""));
@@ -413,8 +413,8 @@ void Nonogram::mouseReleaseEvent(QMouseEvent *event) {
 							if (canAct(r, c)) {
 								if (item(r, c)->backgroundColor() != PRIMARY_COLOR || item(r, c)->text() != QString("")) {
 									record(r, c, PRIMARY_COLOR, QString(""));
-	                                global_game_window->btn_reset->setDisabled(false);
-									global_game_window->setWindowModified(true);
+                                    GameController::game_window->btn_reset->setDisabled(false);
+                                    GameController::game_window->setWindowModified(true);
 								}
 								item(r, c)->setBackgroundColor(PRIMARY_COLOR);
 								item(r, c)->setText(QString(""));
@@ -430,8 +430,8 @@ void Nonogram::mouseReleaseEvent(QMouseEvent *event) {
 							if (canAct(r, c)) {
 								if (item(r, c)->text() != QString("╳")) {
 									record(r, c, PRIMARY_COLOR, QString("╳"));
-	                                global_game_window->btn_reset->setDisabled(false);
-									global_game_window->setWindowModified(true);
+                                    GameController::game_window->btn_reset->setDisabled(false);
+                                    GameController::game_window->setWindowModified(true);
 								}
 								item(r, c)->setBackgroundColor(PRIMARY_COLOR);
 								item(r, c)->setText(QString("╳"));
@@ -468,10 +468,10 @@ void Nonogram::record(const int r, const int c, const QColor& new_background_col
 	move.old_background_color = item(r, c)->backgroundColor();
 	move.old_text = item(r, c)->text();
 	undos.append(move);
-    global_game_window->btn_undo->setDisabled(false);
+    GameController::game_window->btn_undo->setDisabled(false);
 	if (redos.length() != 0) {
 		redos.clear();
-        global_game_window->btn_redo->setDisabled(true);
+        GameController::game_window->btn_redo->setDisabled(true);
 	}
 }
 
@@ -493,15 +493,15 @@ void Nonogram::undo() {
 	checkLineComplete(current_move.row, current_move.column);
 	eraseCrossHighlight();
 	if (undos.length() == 1) {
-		global_game_window->setWindowModified(false);
-        global_game_window->btn_undo->setDisabled(true);
+        GameController::game_window->setWindowModified(false);
+        GameController::game_window->btn_undo->setDisabled(true);
 	} else {
 		crossHighlight(current_move.row, current_move.column);
 		last_c = current_move.column;
 		last_r = current_move.row;
 	}
 	redos.append(current_move);
-    global_game_window->btn_redo->setDisabled(false);
+    GameController::game_window->btn_redo->setDisabled(false);
 	undos.pop_back();
 	checkGameComplete();
 }
@@ -527,10 +527,10 @@ void Nonogram::redo() {
 	last_c = current_move.column;
 	last_r = current_move.row;
 	if (redos.length() == 1) {
-        global_game_window->btn_redo->setDisabled(true);
+        GameController::game_window->btn_redo->setDisabled(true);
 	}
 	undos.append(current_move);
-    global_game_window->btn_undo->setDisabled(false);
+    GameController::game_window->btn_undo->setDisabled(false);
 	redos.pop_back();
 }
 
@@ -573,10 +573,10 @@ void Nonogram::resetGame() {
 		last_c = hint_column + 1;
 		remove("save.nonogram");
         global_btn_resume->setDisabled(true);
-		global_game_window->setWindowModified(false);
-        global_game_window->btn_undo->setDisabled(true);
-        global_game_window->btn_redo->setDisabled(true);
-        global_game_window->btn_reset->setDisabled(true);
+        GameController::game_window->setWindowModified(false);
+        GameController::game_window->btn_undo->setDisabled(true);
+        GameController::game_window->btn_redo->setDisabled(true);
+        GameController::game_window->btn_reset->setDisabled(true);
 	}
 }
 
@@ -653,7 +653,7 @@ void Nonogram::checkGameComplete() {
 	}	
 
 	if (complete) {
-		viewport()->installEventFilter(global_game_window);
+        viewport()->installEventFilter(GameController::game_window);
 		disconnect(this, &QAbstractItemView::entered, this, &Nonogram::getBlock);
 		setShowGrid(false);
 		setMouseTracking(false);
@@ -687,6 +687,6 @@ void Nonogram::checkGameComplete() {
 		undos.clear();
 		redos.clear();
 		preview->hide();
-		global_game_window->onComplete(global_nonogram_data[index].name);
+        GameController::game_window->onComplete(global_nonogram_data[index].name);
 	}
 }

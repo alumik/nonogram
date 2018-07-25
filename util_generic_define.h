@@ -1,25 +1,21 @@
 ﻿#ifndef DEFINE_H
 #define DEFINE_H
 
-// 间隔
 #define SPACING_SMALL             12
 #define SPACING_LARGE             16
-// 按钮字体大小
-#define BUTTON_FONT_SIZE          12
-// 全局按钮尺寸
+
 #define BUTTON_HEIGHT             42
 #define BUTTON_WIDTH              200
-// 工具按钮尺寸
-#define TOOLBUTTON_SIZE           70, BUTTON_HEIGHT + 5
-// 工具按钮图标尺寸
-#define TOOLBUTTON_ICON_SIZE      28, 28
-// 导航按钮尺寸
-#define NAVBUTTON_WIDTH           ((BUTTON_WIDTH - SPACING_SMALL) / 2)
-// 游戏图标大小
+#define BUTTON_FONT_SIZE          12
+
+#define TOOL_BUTTON_SIZE           70, BUTTON_HEIGHT + 5
+#define TOOL_BUTTON_ICON_SIZE      28, 28
+#define NAV_BUTTON_WIDTH           ((BUTTON_WIDTH - SPACING_SMALL) / 2)
+
 #define GAME_ICON_SIZE            130, 130
-// 默认窗口大小
+
 #define DEFAULT_WINDOW_SIZE       400, 550
-// 方格尺寸
+
 #define BLOCK_SIZE                25
 #define SPLITER_SIZE              2
 

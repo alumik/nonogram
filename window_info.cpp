@@ -1,5 +1,5 @@
 ﻿#include "window_info.h"
-#include "define.h"
+#include "util_generic_define.h"
 #include "util_pixel_font.h"
 
 #include <windows.h>
@@ -35,7 +35,7 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget *par
 
 	switch (btn_count) {
 		case 1:
-			btn_control_1 = new MenuButton(tr("返回"), this, true);
+            btn_control_1 = new MenuButton(tr("返回"), this, false);
 			label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
 			label_game_name->setFont(PixelFont("Berlin Sans FB", 25, 50));
 			layout_btn->addWidget(label_game_name, 0, Qt::AlignCenter);
@@ -43,33 +43,33 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget *par
 			layout_btn->addWidget(btn_control_1, 0, Qt::AlignCenter);
 			break;
 		case 2:
-			btn_control_1 = new MenuButton(tr("确定"), this, true);
-			btn_control_2 = new MenuButton(tr("取消"), this, true);
+            btn_control_1 = new MenuButton(tr("确定"), this, false);
+            btn_control_2 = new MenuButton(tr("取消"), this, false);
 			btn_control_2->setDefault(true);
 			layout_btn->addStretch();
 			layout_btn->addWidget(btn_control_1, 0, Qt::AlignCenter);
 			layout_btn->addWidget(btn_control_2, 0, Qt::AlignCenter);
 			layout_btn->addStretch();
-			btn_control_2->setFixedSize(NAVBUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
+			btn_control_2->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
 			connect(btn_control_2, &QPushButton::clicked, this, &InfoWindow::btnControl2Clicked);
 			break;
 		case 3:
-			btn_control_1 = new MenuButton(tr("保存"), this, true);
-			btn_control_2 = new MenuButton(tr("不保存"), this, true);
-			btn_control_3 = new MenuButton(tr("取消"), this, true);
+            btn_control_1 = new MenuButton(tr("保存"), this, false);
+            btn_control_2 = new MenuButton(tr("不保存"), this, false);
+            btn_control_3 = new MenuButton(tr("取消"), this, false);
 			btn_control_1->setDefault(true);
 			layout_btn->addStretch();
 			layout_btn->addWidget(btn_control_1, 0, Qt::AlignCenter);
 			layout_btn->addWidget(btn_control_2, 0, Qt::AlignCenter);
 			layout_btn->addWidget(btn_control_3, 0, Qt::AlignCenter);
 			layout_btn->addStretch();
-			btn_control_2->setFixedSize(NAVBUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
-			btn_control_3->setFixedSize(NAVBUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
+			btn_control_2->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
+			btn_control_3->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
 			connect(btn_control_2, &QPushButton::clicked, this, &InfoWindow::btnControl2Clicked);
 			connect(btn_control_3, &QPushButton::clicked, this, &InfoWindow::btnControl3Clicked);
 		default: ;
 	}
-	btn_control_1->setFixedSize(NAVBUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
+	btn_control_1->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
 	connect(btn_control_1, &QPushButton::clicked, this, &InfoWindow::btnControl1Clicked);
 
 	layout_this = new QVBoxLayout;

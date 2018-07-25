@@ -1,7 +1,7 @@
 ﻿#ifndef CONTROLLER_VERSION_H
 #define CONTROLLER_VERSION_H
 
-#include "build_number.h"
+#include "util_build_number.h"
 
 #include <QDateTime>
 #include <QLocale>

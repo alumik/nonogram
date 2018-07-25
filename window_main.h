@@ -14,13 +14,14 @@ class MainWindow : public QWidget {
 public:
     explicit MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
+    void checkBtnLoad();
 
 private:
 	QLabel* label_icon;
-	QLabel* label_game_name;
-	QLabel* label_game_name_sub;
+    QLabel* label_game_title;
+    QLabel* label_game_title_secondary;
 	MenuButton* btn_start;
-	MenuButton* btn_resume;
+    MenuButton* btn_load;
 	MenuButton* btn_about;
 	MenuButton* btn_exit;
 	QVBoxLayout* layout_title;

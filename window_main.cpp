@@ -1,15 +1,14 @@
 ﻿#include "window_main.h"
-#include "define.h"
+#include "util_generic_define.h"
 #include "controller_version.h"
 #include "window_stacked.h"
 #include "window_info.h"
 #include "util_pixel_font.h"
+#include "controller_game.h"
 
 #include <QApplication>
 #include <QPixmap>
 
-extern StackedWindow* global_stacked_window;
-extern bool canLoad();
 extern void loadGame();
 
 MenuButton* global_btn_resume; // 继续游戏按键
@@ -27,33 +26,34 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 	label_icon->setPixmap(icon);
 
 	// 创建标题
-	label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
-	label_game_name->setFont(PixelFont("Berlin Sans FB", 55, 50));
+    label_game_title = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
+    label_game_title->setFont(PixelFont("Berlin Sans FB", 55, 50));
 
-	label_game_name_sub = new QLabel(tr(R"(<font color="#cccccc">网格画</font>)"), this);
-	label_game_name_sub->setFont(PixelFont("Adobe 黑体 Std R", 30, 50));
+    // 创建副标题
+    label_game_title_secondary = new QLabel(tr(R"(<font color="#cccccc">网格画</font>)"), this);
+    label_game_title_secondary->setFont(PixelFont("Adobe 黑体 Std R", 30, 50));
 
 	// 创建按钮
 	btn_start = new MenuButton(tr("开始游戏"), this);
     connect(btn_start, &QPushButton::clicked, this, &MainWindow::showLevelSelector);
 
-	global_btn_resume = btn_resume = new MenuButton(tr("继续游戏"), this);
-    btn_resume->setDisabled(!canLoad());
-    connect(btn_resume, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
+    global_btn_resume = btn_load = new MenuButton(tr("继续游戏"), this);
+    checkBtnLoad();
+    connect(btn_load, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
 
-	btn_about = new MenuButton(tr("关于"), this, true);
-	btn_about->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_about = new MenuButton(tr("关于"), this, false);
+	btn_about->setFixedWidth(NAV_BUTTON_WIDTH);
 	connect(btn_about, &QPushButton::clicked, this, &MainWindow::showAbout);
 
-	btn_exit = new MenuButton(tr("退出"), this, true);
-	btn_exit->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_exit = new MenuButton(tr("退出"), this, false);
+	btn_exit->setFixedWidth(NAV_BUTTON_WIDTH);
 	connect(btn_exit, &QPushButton::clicked, this, &QApplication::quit);
 
 	// 创建标题布局
     layout_title = new QVBoxLayout();
 	layout_title->addWidget(label_icon, 0, Qt::AlignCenter);
-	layout_title->addWidget(label_game_name, 0, Qt::AlignCenter);
-	layout_title->addWidget(label_game_name_sub, 0, Qt::AlignCenter);
+    layout_title->addWidget(label_game_title, 0, Qt::AlignCenter);
+    layout_title->addWidget(label_game_title_secondary, 0, Qt::AlignCenter);
 	layout_title->setSpacing(SPACING_SMALL / 2);
 
 	// 创建按钮布局
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 	layout_this->addLayout(layout_title);
 	layout_this->addStretch();
 	layout_this->addWidget(btn_start, 0, Qt::AlignHCenter);
-	layout_this->addWidget(btn_resume, 0, Qt::AlignHCenter);
+    layout_this->addWidget(btn_load, 0, Qt::AlignHCenter);
 	layout_this->addLayout(layout_btn);
 	layout_this->setContentsMargins(30, 30, 30, 30);
 	layout_this->setSpacing(SPACING_SMALL);
@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 void MainWindow::showAbout() {
     InfoWindow info(tr("版本号：%1\n"
                        "编译时间：%2\n\n"
-					   "开发者：钟震宇\n"
+                       "作者：钟震宇\n"
                        "联系方式：nczzy1997@gmail.com")
                     .arg(VersionController::getVersion())
                     .arg(VersionController::getBulidDateTime()),
@@ -96,14 +96,14 @@ void MainWindow::showAbout() {
  * \brief 显示网格画选择
  */
 void MainWindow::showLevelSelector() {
-    if (canLoad()) {
+    if (GameController::canLoadGame()) {
 		InfoWindow info(tr("<center>您还有未完成的游戏<br>开始新游戏将删除现有游戏进度<br>是否继续？</center>"), 2, this);
         const auto response = info.exec();
         if (response == QDialog::Accepted) {
-            global_stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
+            GameController::stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
 		}
 	} else {
-        global_stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
+        GameController::stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
 	}
 }
 
@@ -112,6 +112,10 @@ void MainWindow::showLevelSelector() {
  */
 void MainWindow::loadGameSlot() {
 	loadGame();
+}
+
+void MainWindow::checkBtnLoad() {
+    btn_load->setDisabled(!GameController::canLoadGame());
 }
 
 /**

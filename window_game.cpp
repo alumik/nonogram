@@ -1,8 +1,9 @@
 ﻿#include "window_game.h"
-#include "define.h"
+#include "util_generic_define.h"
 #include "window_stacked.h"
 #include "window_info.h"
 #include "util_pixel_font.h"
+#include "controller_game.h"
 
 #include <QPalette>
 #include <QIcon>
@@ -10,10 +11,8 @@
 #include <QGuiApplication>
 #include <cstdio>
 
-extern StackedWindow* global_stacked_window;
 extern MenuButton* global_btn_resume;
 extern void saveGame(Nonogram* nonogram);
-extern bool canLoad();
 
 /**
  * \brief 游戏界面框架
@@ -52,15 +51,15 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     cursor_cross = cursor_tools.copy(63,3,23,23);
 
     // 工具按钮
-    btn_paint = new ToolButton(QIcon(icon_paint_checked), tr("填充"), this, true, true);
+    btn_paint = new ToolButton(QIcon(icon_paint_checked), tr("填充"), this, true, false);
     connect(btn_paint, &QPushButton::clicked, this, &GameWindow::checkedPaint);
     game_widget->viewport()->setCursor(QCursor(cursor_paint, 1, 22));
     btn_paint->setChecked(true);
 
-    btn_erase = new ToolButton(QIcon(icon_erase), tr("清除"), this, true, true);
+    btn_erase = new ToolButton(QIcon(icon_erase), tr("清除"), this, true, false);
     connect(btn_erase, &QPushButton::clicked, this, &GameWindow::checkedErase);
 
-    btn_cross = new ToolButton(QIcon(icon_cross), tr("标记空白"), this, true, true);
+    btn_cross = new ToolButton(QIcon(icon_cross), tr("标记空白"), this, true, false);
     connect(btn_cross, &QPushButton::clicked, this, &GameWindow::checkedCross);
 
     btn_undo = new ToolButton(QIcon(icon_tools.copy(288, 0, 96, 96)), tr("撤销"), this);
@@ -80,12 +79,12 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     label_game_name->setFont(PixelFont("Berlin Sans FB", 30, 50));
 
     // 菜单按钮
-    btn_help = new MenuButton(tr("帮助"), this, true);
-    btn_help->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_help = new MenuButton(tr("帮助"), this, false);
+    btn_help->setFixedWidth(NAV_BUTTON_WIDTH);
     connect(btn_help, &QPushButton::clicked, this, &GameWindow::showHelp);
 
-    btn_back = new MenuButton(tr("返回"), this, true);
-    btn_back->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_back = new MenuButton(tr("返回"), this, false);
+    btn_back->setFixedWidth(NAV_BUTTON_WIDTH);
     connect(btn_back, &QPushButton::clicked, this, &GameWindow::showMain);
 
     // 工具按钮布局
@@ -129,9 +128,9 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 void GameWindow::showMain() {
 	close();
     if (can_return) {
-        global_stacked_window->setIndex(0);
-        global_stacked_window->show();
-        global_stacked_window->activateWindow();
+        GameController::stacked_window->setIndex(0);
+        GameController::stacked_window->show();
+        GameController::stacked_window->activateWindow();
 	}
 }
 
@@ -230,7 +229,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
         if (game_widget->complete) {
 			remove("save.nonogram");
 		}
-        global_btn_resume->setDisabled(!canLoad());
+        global_btn_resume->setDisabled(!GameController::canLoadGame());
 		event->accept();
         can_return = true;
 	}
@@ -244,8 +243,8 @@ void GameWindow::showEvent(QShowEvent* event) {
 	QWidget::showEvent(event);
     resize(game_widget->table_width + 60, game_widget->table_height + SPACING_LARGE * 2 + 60 + BUTTON_HEIGHT + 10 + BUTTON_HEIGHT);
     auto desktop_geometry = QGuiApplication::screens()[0]->availableGeometry();
-    auto x = global_stacked_window->pos().x() + (global_stacked_window->frameGeometry().width() - frameGeometry().width()) / 2;
-    auto y = global_stacked_window->pos().y() + (global_stacked_window->frameGeometry().height() - frameGeometry().height()) / 2;
+    auto x = GameController::stacked_window->pos().x() + (GameController::stacked_window->frameGeometry().width() - frameGeometry().width()) / 2;
+    auto y = GameController::stacked_window->pos().y() + (GameController::stacked_window->frameGeometry().height() - frameGeometry().height()) / 2;
 	if (x < 8) {
 		x = 8;
     } else if (x + frameGeometry().width() > desktop_geometry.width()) {

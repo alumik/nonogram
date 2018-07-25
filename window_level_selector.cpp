@@ -1,13 +1,12 @@
 ﻿#include "window_level_selector.h"
-#include "define.h"
+#include "util_generic_define.h"
 #include "window_stacked.h"
 #include "window_game.h"
 #include "util_pixel_font.h"
+#include "controller_game.h"
 
 #include <cstdio>
 
-extern StackedWindow* global_stacked_window;
-extern GameWindow* global_game_window;
 extern MenuButton* global_btn_resume;
 
 int global_nonogram_index; // 网格化序号
@@ -38,12 +37,12 @@ LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {
 	btn_large = new MenuButton(tr("公鸡 [30x30]"), this);
     connect(btn_large, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
-	btn_test = new MenuButton(tr("测试"), this, true);
-	btn_test->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_test = new MenuButton(tr("测试"), this, false);
+	btn_test->setFixedWidth(NAV_BUTTON_WIDTH);
     connect(btn_test, &QPushButton::clicked, this, &LevelSelectorWindow::startGame);
 
-	btn_back = new MenuButton(tr("返回"), this, true);
-	btn_back->setFixedWidth(NAVBUTTON_WIDTH);
+    btn_back = new MenuButton(tr("返回"), this, false);
+	btn_back->setFixedWidth(NAV_BUTTON_WIDTH);
     connect(btn_back, &QPushButton::clicked, this, &LevelSelectorWindow::showMain);
 
 	// 创建按钮布局
@@ -86,23 +85,23 @@ void LevelSelectorWindow::startGame() const {
 		global_nonogram_index = 0;
 	}
 
-	if (global_game_window) {
-		delete global_game_window;
-		global_game_window = nullptr;
+    if (GameController::game_window) {
+        delete GameController::game_window;
+        GameController::game_window = nullptr;
 	}
 
 	remove("save.nonogram");
 	global_btn_resume->setDisabled(true);
-	global_game_window = new GameWindow;
-	global_game_window->show();
-	global_stacked_window->hide();
+    GameController::game_window = new GameWindow;
+    GameController::game_window->show();
+    GameController::stacked_window->hide();
 }
 
 /**
  * \brief 显示主界面
  */
 void LevelSelectorWindow::showMain() {
-	global_stacked_window->setIndex(0);
+    GameController::stacked_window->setIndex(0);
 }
 
 /**

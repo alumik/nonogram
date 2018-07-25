@@ -9,7 +9,7 @@ class MenuButton : public QPushButton {
 public:
     explicit MenuButton(const QString& caption,
                         QWidget* parent = nullptr,
-                        bool no_accent_color = false);
+                        bool accent_color = true);
 };
 
 #endif // BUTTON_MENU_H
