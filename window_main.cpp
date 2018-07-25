@@ -11,8 +11,6 @@
 
 extern void loadGame();
 
-MenuButton* global_btn_resume; // 继续游戏按键
-
 /**
  * \brief 游戏主窗口
  * \param parent 父部件指针
@@ -37,9 +35,9 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 	btn_start = new MenuButton(tr("开始游戏"), this);
     connect(btn_start, &QPushButton::clicked, this, &MainWindow::showLevelSelector);
 
-    global_btn_resume = btn_load = new MenuButton(tr("继续游戏"), this);
+    btn_load = new MenuButton(tr("继续游戏"), this);
     checkBtnLoad();
-    connect(btn_load, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
+    connect(btn_load, &QPushButton::clicked, this, &MainWindow::onLoadGame);
 
     btn_about = new MenuButton(tr("关于"), this, false);
 	btn_about->setFixedWidth(NAV_BUTTON_WIDTH);
@@ -110,7 +108,7 @@ void MainWindow::showLevelSelector() {
 /**
  * \brief 加载游戏
  */
-void MainWindow::loadGameSlot() {
+void MainWindow::onLoadGame() {
 	loadGame();
 }
 

@@ -5,20 +5,14 @@
 #include "util_pixel_font.h"
 #include "controller_game.h"
 
-#include <cstdio>
-
-extern MenuButton* global_btn_resume;
-
-int global_nonogram_index; // 网格化序号
-
 /**
  * \brief 关卡选择器
  * \param parent 父部件指针
  */
 LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {
 	// 创建游戏标题
-	label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
-	label_game_name->setFont(PixelFont("Berlin Sans FB", 40, 50));
+    label_game_title = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
+    label_game_title->setFont(PixelFont("Berlin Sans FB", 40, 50));
 
 	// 创建窗口标题
 	label_title = new QLabel(tr(R"(<center><font color="#cccccc">网格画选择</font></center>)"), this);
@@ -57,7 +51,7 @@ LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {
 	layout_this = new QVBoxLayout();
 	setLayout(layout_this);
 	layout_this->addStretch(1);
-	layout_this->addWidget(label_game_name, 0, Qt::AlignCenter);
+    layout_this->addWidget(label_game_title, 0, Qt::AlignCenter);
 	layout_this->addWidget(label_title, 0, Qt::AlignCenter);
 	layout_this->addStretch(2);
 	layout_this->addWidget(btn_mini, 0, Qt::AlignCenter);
@@ -74,34 +68,25 @@ LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {
  */
 void LevelSelectorWindow::startGame() const {
 	if (sender() == btn_mini) {
-		global_nonogram_index = 1;
+        GameController::nonogram_index = 1;
 	} else if (sender() == btn_small) {
-		global_nonogram_index = 2;
+        GameController::nonogram_index = 2;
 	} else if (sender() == btn_medium) {
-		global_nonogram_index = 3;
+        GameController::nonogram_index = 3;
 	} else if (sender() == btn_large) {
-		global_nonogram_index = 4;
+        GameController::nonogram_index = 4;
 	} else if (sender() == btn_test) {
-		global_nonogram_index = 0;
+        GameController::nonogram_index = 0;
 	}
 
-    if (GameController::game_window) {
-        delete GameController::game_window;
-        GameController::game_window = nullptr;
-	}
-
-	remove("save.nonogram");
-	global_btn_resume->setDisabled(true);
-    GameController::game_window = new GameWindow;
-    GameController::game_window->show();
-    GameController::stacked_window->hide();
+    GameController::startGame();
 }
 
 /**
  * \brief 显示主界面
  */
 void LevelSelectorWindow::showMain() {
-    GameController::stacked_window->setIndex(0);
+    GameController::stacked_window->setIndex(StackedWindow::MAIN_WINDOW_INDEX);
 }
 
 /**

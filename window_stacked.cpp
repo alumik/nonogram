@@ -35,6 +35,10 @@ void StackedWindow::setIndex(const int index) const {
 	layout_this->setCurrentIndex(index);
 }
 
+void StackedWindow::checkBtnLoad() {
+    main_window->checkBtnLoad();
+}
+
 /**
  * \brief 析构函数
  */

@@ -6,8 +6,6 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-extern int global_nonogram_index;
-
 class LevelSelectorWindow : public QWidget {
 	Q_OBJECT
 
@@ -17,7 +15,7 @@ public:
 
 private:
 	QLabel* label_title;
-	QLabel* label_game_name;
+	QLabel* label_game_title;
 	MenuButton* btn_mini;
 	MenuButton* btn_small;
 	MenuButton* btn_medium;

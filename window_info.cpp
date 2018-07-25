@@ -1,6 +1,7 @@
 ﻿#include "window_info.h"
 #include "util_generic_define.h"
 #include "util_pixel_font.h"
+#include "controller_game.h"
 
 #include <windows.h>
 #include <QPropertyAnimation>
@@ -11,12 +12,9 @@
  * \param btn_count 
  * \param parent 
  */
-InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget *parent) : QDialog(parent) {
+InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget* parent) : QDialog(parent) {
 	// 设置窗口颜色
-	auto pal = palette();
-	pal.setColor(QPalette::Background, DARK_COLOR);
-	setAutoFillBackground(true);
-    setPalette(pal);
+    GameController::setBackgroundColor(this, DARK_COLOR);
 
 	// 无边框模式
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
@@ -30,15 +28,15 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget *par
 	label_content->setStyleSheet("QLabel { color: rgb(204, 204, 204) }");
 
 	// 按钮布局
-	layout_btn = new QHBoxLayout;
+    layout_btn = new QHBoxLayout();
 	layout_btn->setSpacing(SPACING_SMALL);
 
 	switch (btn_count) {
 		case 1:
             btn_control_1 = new MenuButton(tr("返回"), this, false);
-			label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
-			label_game_name->setFont(PixelFont("Berlin Sans FB", 25, 50));
-			layout_btn->addWidget(label_game_name, 0, Qt::AlignCenter);
+            label_game_title = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
+            label_game_title->setFont(PixelFont("Berlin Sans FB", 25, 50));
+            layout_btn->addWidget(label_game_title, 0, Qt::AlignCenter);
 			layout_btn->addStretch();
 			layout_btn->addWidget(btn_control_1, 0, Qt::AlignCenter);
 			break;
@@ -72,7 +70,7 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget *par
 	btn_control_1->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
 	connect(btn_control_1, &QPushButton::clicked, this, &InfoWindow::btnControl1Clicked);
 
-	layout_this = new QVBoxLayout;
+    layout_this = new QVBoxLayout();
 	setLayout(layout_this);
 	layout_this->addWidget(label_content, 0, Qt::AlignCenter);
 	layout_this->addLayout(layout_btn);

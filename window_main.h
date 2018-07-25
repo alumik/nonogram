@@ -6,8 +6,6 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-extern MenuButton* global_btn_resume;
-
 class MainWindow : public QWidget {
 	Q_OBJECT
 
@@ -31,7 +29,7 @@ private:
 private slots:
 	void showAbout();
     void showLevelSelector();
-    static void loadGameSlot();
+    static void onLoadGame();
 };
 
 #endif // WINDOW_MAIN_H

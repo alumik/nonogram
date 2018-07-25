@@ -8,15 +8,13 @@
 
 using namespace std;
 
-extern int global_nonogram_index;
-
 /**
  * \brief 载入游戏
  */
 void loadGame() {
 	ifstream loader;
 	loader.open("save.nonogram");
-	loader >> global_nonogram_index;
+    loader >> GameController::nonogram_index;
 
 	// 初始化游戏
     if (GameController::game_window) {

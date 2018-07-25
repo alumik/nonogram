@@ -11,14 +11,11 @@
 #include <QGuiApplication>
 #include <cstdio>
 
-extern MenuButton* global_btn_resume;
-extern void saveGame(Nonogram* nonogram);
-
 /**
  * \brief 游戏界面框架
  * \param parent
  */
-GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
+GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     // 判断能否回到主界面
     can_return = false;
     // 工具类型（默认画笔）
@@ -28,10 +25,7 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 	setWindowTitle(tr("Nonogram[*]"));
 
     // 设置窗口颜色
-	auto pal = palette();
-	pal.setColor(QPalette::Background, DARK_COLOR);
-	setAutoFillBackground(true);
-	setPalette(pal);
+    GameController::setBackgroundColor(this, DARK_COLOR);
 
     // 创建游戏控件
     game_widget = new Nonogram(this);
@@ -75,8 +69,8 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     btn_reset->setDisabled(true);
 
     // 游戏标题
-    label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
-    label_game_name->setFont(PixelFont("Berlin Sans FB", 30, 50));
+    label_game_title = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
+    label_game_title->setFont(PixelFont("Berlin Sans FB", 30, 50));
 
     // 菜单按钮
     btn_help = new MenuButton(tr("帮助"), this, false);
@@ -102,7 +96,7 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
     // 菜单按钮布局
     layout_btn_menu = new QHBoxLayout;
     layout_btn_menu->addStretch();
-    layout_btn_menu->addWidget(label_game_name, 0, Qt::AlignCenter);
+    layout_btn_menu->addWidget(label_game_title, 0, Qt::AlignCenter);
     label_place_holder = new QLabel(this);
     label_place_holder->setFixedWidth(10);
     layout_btn_menu->addWidget(label_place_holder, 0, Qt::AlignCenter);
@@ -128,7 +122,8 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent) {
 void GameWindow::showMain() {
 	close();
     if (can_return) {
-        GameController::stacked_window->setIndex(0);
+        GameController::stacked_window->setIndex(StackedWindow::MAIN_WINDOW_INDEX);
+        GameController::stacked_window->checkBtnLoad();
         GameController::stacked_window->show();
         GameController::stacked_window->activateWindow();
 	}
@@ -145,8 +140,8 @@ void GameWindow::showHelp() {
 					   "四条线分别占了4格、8格、1格和1格。每条线之间最少要有一个空格。<br>"
 					   "即“████ ████████ █ █”。<font color=\"#FF7800\">线条间可以间隔多个空格</font>，但<font color=\"#FF7800\">线条的顺序不能变</font>。<br><br>"
 					   "玩家应尽量用“╳”号标记一定不需要填充的格子，以辅助判断。"),
-        1,
-        this);
+                       1,
+                       this);
 	info.exec();
 }
 
@@ -212,13 +207,12 @@ bool GameWindow::eventFilter(QObject *obj, QEvent *event) {
 void GameWindow::closeEvent(QCloseEvent *event) {
     if (isWindowModified() && !game_widget->complete) {
 		InfoWindow info(tr("是否保存游戏进度？"), 3, this);
-		const auto r = info.exec();
-		if (r == QDialog::Accepted) {
-            saveGame(game_widget);
-            global_btn_resume->setDisabled(false);
+        const auto response = info.exec();
+        if (response == QDialog::Accepted) {
+            game_widget->save();
 			event->accept();
             can_return = true;
-		} else if (r == 3) {
+        } else if (response == 3) {
 			event->ignore();
             can_return = false;
 		} else {
@@ -228,8 +222,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
 	} else {
         if (game_widget->complete) {
 			remove("save.nonogram");
-		}
-        global_btn_resume->setDisabled(!GameController::canLoadGame());
+        }
 		event->accept();
         can_return = true;
 	}
@@ -243,26 +236,28 @@ void GameWindow::showEvent(QShowEvent* event) {
 	QWidget::showEvent(event);
     resize(game_widget->table_width + 60, game_widget->table_height + SPACING_LARGE * 2 + 60 + BUTTON_HEIGHT + 10 + BUTTON_HEIGHT);
     auto desktop_geometry = QGuiApplication::screens()[0]->availableGeometry();
-    auto x = GameController::stacked_window->pos().x() + (GameController::stacked_window->frameGeometry().width() - frameGeometry().width()) / 2;
-    auto y = GameController::stacked_window->pos().y() + (GameController::stacked_window->frameGeometry().height() - frameGeometry().height()) / 2;
-	if (x < 8) {
-		x = 8;
-    } else if (x + frameGeometry().width() > desktop_geometry.width()) {
-        x = desktop_geometry.width() - frameGeometry().width() - 8;
+    QPoint position(
+        GameController::stacked_window->pos().x() + (GameController::stacked_window->frameGeometry().width() - frameGeometry().width()) / 2,
+        GameController::stacked_window->pos().y() + (GameController::stacked_window->frameGeometry().height() - frameGeometry().height()) / 2
+    );
+    if (position.x() < 8) {
+        position.setX(8);
+    } else if (position.x() + frameGeometry().width() > desktop_geometry.width()) {
+        position.setX(desktop_geometry.width() - frameGeometry().width() - 8);
 	}
-	if (y < 8) {
-		y = 8;
-    } else if (y + frameGeometry().height() > desktop_geometry.height()) {
-        y = desktop_geometry.height() - frameGeometry().height() - 8;
+    if (position.y() < 8) {
+        position.setY(8);
+    } else if (position.y() + frameGeometry().height() > desktop_geometry.height()) {
+        position.setY(desktop_geometry.height() - frameGeometry().height() - 8);
 	}
-	move(x, y);
+    move(position);
 }
 
 /**
  * \brief 游戏结束后调整界面显示
  * \param name
  */
-void GameWindow::onComplete(const QString& name) {
+void GameWindow::showComplete(const QString& name) {
     btn_help->setVisible(false);
     btn_paint->setVisible(false);
     btn_erase->setVisible(false);
@@ -271,9 +266,9 @@ void GameWindow::onComplete(const QString& name) {
     btn_redo->setVisible(false);
     btn_reset->setVisible(false);
     label_place_holder->setVisible(false);
-    layout_btn_menu->removeWidget(label_game_name);
+    layout_btn_menu->removeWidget(label_game_title);
     layout_btn_menu->removeWidget(btn_back);
-    layout_this->addWidget(label_game_name, 0, Qt::AlignCenter);
+    layout_this->addWidget(label_game_title, 0, Qt::AlignCenter);
     layout_this->addWidget(btn_back, 0, Qt::AlignCenter);
 
 	InfoWindow info(tr(R"(恭喜您，游戏<font color="#ff7800"> “%1” </font>已完成！)").arg(name), 1, this);

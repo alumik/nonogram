@@ -22,9 +22,9 @@ public:
 	ToolButton* btn_redo;
 	ToolButton* btn_reset;
 
-    explicit GameWindow(QWidget *parent = nullptr);
+    explicit GameWindow(QWidget* parent = nullptr);
     ~GameWindow() override;
-    void onComplete(const QString& name);
+    void showComplete(const QString& name);
 
 private:
     bool can_return;
@@ -42,7 +42,7 @@ private:
 	ToolButton* btn_paint;
 	ToolButton* btn_erase;
 	ToolButton* btn_cross;
-	QLabel* label_game_name;
+    QLabel* label_game_title;
 	QLabel* label_place_holder;
 	MenuButton* btn_help;
 	MenuButton* btn_back;

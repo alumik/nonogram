@@ -33,6 +33,7 @@ public:
 	void checkLineComplete(int r, int c);
 	bool complete;
 	explicit Nonogram(QWidget* parent = nullptr);
+    void save();
 
 private:
 	int last_r;

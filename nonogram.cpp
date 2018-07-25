@@ -9,9 +9,7 @@
 
 #include <QHeaderView>
 #include <cstdio>
-
-extern int global_nonogram_index;
-extern MenuButton* global_btn_resume;
+#include <fstream>
 
 extern QVector<int> readRow(int r, Nonogram* nonogram);
 extern QVector<int> readColumn(int c, Nonogram* nonogram);
@@ -24,7 +22,7 @@ extern QVector<int> readHintColumn(int c, Nonogram* nonogram);
  */
 Nonogram::Nonogram(QWidget* parent) : QTableWidget(parent) {
 	// 读取游戏数据
-	index = global_nonogram_index;
+    index = GameController::nonogram_index;
 	complete = false;
 	game_row = global_nonogram_data[index].game_row;
 	game_column = global_nonogram_data[index].game_column;
@@ -571,8 +569,7 @@ void Nonogram::resetGame() {
 		current_c = -1;
 		last_r = hint_row + 1;
 		last_c = hint_column + 1;
-		remove("save.nonogram");
-        global_btn_resume->setDisabled(true);
+        remove("save.nonogram");
         GameController::game_window->setWindowModified(false);
         GameController::game_window->btn_undo->setDisabled(true);
         GameController::game_window->btn_redo->setDisabled(true);
@@ -687,6 +684,28 @@ void Nonogram::checkGameComplete() {
 		undos.clear();
 		redos.clear();
 		preview->hide();
-        GameController::game_window->onComplete(global_nonogram_data[index].name);
+        GameController::game_window->showComplete(global_nonogram_data[index].name);
 	}
+}
+
+void Nonogram::save() {
+    std::ofstream saver("save.nonogram");
+    saver << index << std::endl;
+    for (auto r = hint_row + 1; r < rowCount(); r++) {
+        for (auto c = hint_column + 1; c < columnCount(); c++) {
+            const auto c_color = item(r, c)->backgroundColor();
+            const auto c_text = item(r, c)->text();
+            if ((c_color == PRIMARY_COLOR || c_color == CROSS_HIGHLIGHT_COLOR) && c_text == QString("")) {
+                saver << 0 << " ";
+            } else if (c_color == DARK_COLOR) {
+                saver << 1 << " ";
+            } else if ((c_color == PRIMARY_COLOR || c_color == CROSS_HIGHLIGHT_COLOR) && c_text == QString("╳")) {
+                saver << 2 << " ";
+            } else if (c_color == SECONDARY_SPLITER_COLOR) {
+                saver << -1 << " ";
+            }
+        }
+        saver << std::endl;
+    }
+    saver.close();
 }
