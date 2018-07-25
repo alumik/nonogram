@@ -5,10 +5,9 @@
 
 /**
  * \brief 层叠式窗口
- * \param parent 
+ * \param parent 父部件指针
  */
-StackedWindow::StackedWindow(QWidget *parent) : QWidget(parent) {
-
+StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
 	// 设置窗口标题
 	setWindowTitle(tr("Nonogram"));
 
@@ -23,29 +22,21 @@ StackedWindow::StackedWindow(QWidget *parent) : QWidget(parent) {
 
 	// 创建主界面和游戏选择界面
 	main_window = new MainWindow(this);
-	level_selecter = new LevelSelector(this);
+    level_selector = new LevelSelector(this);
 
 	// 创建布局
-	layout_this = new QStackedLayout;
+    layout_this = new QStackedLayout();
 	setLayout(layout_this);
 	layout_this->addWidget(main_window);
-	layout_this->addWidget(level_selecter);
+    layout_this->addWidget(level_selector);
 }
 
 /**
  * \brief 切换页面
- * \param index 
+ * \param index 页面索引
  */
 void StackedWindow::setIndex(const int index) const {
 	layout_this->setCurrentIndex(index);
-}
-
-/**
- * \brief 添加控件
- * \param widget 
- */
-void StackedWindow::addWidget(QWidget* widget) const {
-	layout_this->addWidget(widget);
 }
 
 /**

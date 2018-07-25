@@ -12,9 +12,13 @@ extern StackedWindow* global_stacked_window;
 extern bool canLoad();
 extern void loadGame();
 
-MenuButton* global_btn_resume;
+MenuButton* global_btn_resume; // 继续游戏按键
 
-MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
+/**
+ * \brief 游戏主窗口
+ * \param parent 父部件指针
+ */
+MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 	// 创建图标
 	label_icon = new QLabel(this);
 	label_icon->setFixedSize(GAME_ICON_SIZE);
@@ -31,11 +35,11 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
 	// 创建按钮
 	btn_start = new MenuButton(tr("开始游戏"), this);
-	connect(btn_start, &QPushButton::clicked, this, &MainWindow::showLevelSelecter);
+    connect(btn_start, &QPushButton::clicked, this, &MainWindow::showLevelSelector);
 
 	global_btn_resume = btn_resume = new MenuButton(tr("继续游戏"), this);
-	btn_resume->setDisabled(canLoad());
-	connect(btn_resume, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
+    btn_resume->setDisabled(!canLoad());
+    connect(btn_resume, &QPushButton::clicked, this, &MainWindow::loadGameSlot);
 
 	btn_about = new MenuButton(tr("关于"), this, true);
 	btn_about->setFixedWidth(NAVBUTTON_WIDTH);
@@ -46,14 +50,14 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	connect(btn_exit, &QPushButton::clicked, this, &QApplication::quit);
 
 	// 创建标题布局
-	layout_title = new QVBoxLayout;
+    layout_title = new QVBoxLayout();
 	layout_title->addWidget(label_icon, 0, Qt::AlignCenter);
 	layout_title->addWidget(label_game_name, 0, Qt::AlignCenter);
 	layout_title->addWidget(label_game_name_sub, 0, Qt::AlignCenter);
 	layout_title->setSpacing(SPACING_SMALL / 2);
 
 	// 创建按钮布局
-	layout_btn = new QHBoxLayout;
+    layout_btn = new QHBoxLayout();
 	layout_btn->addStretch();
 	layout_btn->addWidget(btn_about);
 	layout_btn->addWidget(btn_exit);
@@ -61,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 	layout_btn->setSpacing(SPACING_SMALL);
 
 	// 创建布局
-	layout_this = new QVBoxLayout;
+    layout_this = new QVBoxLayout();
 	setLayout(layout_this);
 	layout_this->addStretch();
 	layout_this->addLayout(layout_title);
@@ -74,13 +78,15 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 }
 
 /**
- * \brief 显示关于
+ * \brief 显示关于信息
  */
 void MainWindow::showAbout() {
     InfoWindow info(tr("版本号：%1\n"
                        "编译时间：%2\n\n"
 					   "开发者：钟震宇\n"
-                       "联系方式：nczzy1997@gmail.com").arg(Version::getVersion()).arg(Version::getBulidDateTime()),
+                       "联系方式：nczzy1997@gmail.com")
+                    .arg(Version::getVersion())
+                    .arg(Version::getBulidDateTime()),
 					1,
 					this);
 	info.exec();
@@ -89,15 +95,15 @@ void MainWindow::showAbout() {
 /**
  * \brief 显示网格画选择
  */
-void MainWindow::showLevelSelecter() {
-	if (!canLoad()) {
+void MainWindow::showLevelSelector() {
+    if (canLoad()) {
 		InfoWindow info(tr("<center>您还有未完成的游戏<br>开始新游戏将删除现有游戏进度<br>是否继续？</center>"), 2, this);
-		const auto r = info.exec();
-		if (r == QDialog::Accepted) {
-			global_stacked_window->setIndex(1);
+        const auto response = info.exec();
+        if (response == QDialog::Accepted) {
+            global_stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
 		}
 	} else {
-		global_stacked_window->setIndex(1);
+        global_stacked_window->setIndex(StackedWindow::LEVEL_SELECTOR_INDEX);
 	}
 }
 
@@ -108,6 +114,9 @@ void MainWindow::loadGameSlot() {
 	loadGame();
 }
 
+/**
+ * \brief 析构函数
+ */
 MainWindow::~MainWindow() {
 	delete layout_title;
 	layout_title = nullptr;

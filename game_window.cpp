@@ -230,7 +230,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
         if (game_widget->complete) {
 			remove("save.nonogram");
 		}
-        global_btn_resume->setDisabled(canLoad());
+        global_btn_resume->setDisabled(!canLoad());
 		event->accept();
         can_return = true;
 	}

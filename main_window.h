@@ -12,7 +12,7 @@ class MainWindow : public QWidget {
 	Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
 private:
@@ -29,8 +29,8 @@ private:
 
 private slots:
 	void showAbout();
-	void showLevelSelecter();
-	static void loadGameSlot();
+    void showLevelSelector();
+    static void loadGameSlot();
 };
 
 #endif // MAIN_WINDOW_H

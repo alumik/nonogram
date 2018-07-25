@@ -10,13 +10,13 @@ extern StackedWindow* global_stacked_window;
 extern GameWindow* global_game_window;
 extern MenuButton* global_btn_resume;
 
-int global_nonogram_index;
+int global_nonogram_index; // 网格化序号
 
 /**
  * \brief 关卡选择器
- * \param parent 
+ * \param parent 父部件指针
  */
-LevelSelector::LevelSelector(QWidget *parent) : QWidget(parent) {
+LevelSelector::LevelSelector(QWidget* parent) : QWidget(parent) {
 	// 创建游戏标题
 	label_game_name = new QLabel(tr(R"(<font color="#cccccc">Nono</font><font color="#FF7800">gram</font>)"), this);
 	label_game_name->setFont(PixelFont("Berlin Sans FB", 40, 50));
@@ -47,7 +47,7 @@ LevelSelector::LevelSelector(QWidget *parent) : QWidget(parent) {
 	connect(btn_back, &QPushButton::clicked, this, &LevelSelector::showMain);
 
 	// 创建按钮布局
-	layout_btn = new QHBoxLayout;
+    layout_btn = new QHBoxLayout();
 	layout_btn->addStretch();
 	layout_btn->addWidget(btn_test, 0, Qt::AlignHCenter);
 	layout_btn->addWidget(btn_back, 0, Qt::AlignHCenter);

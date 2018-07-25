@@ -12,8 +12,8 @@ class LevelSelector : public QWidget {
 	Q_OBJECT
 
 public:
-	explicit LevelSelector(QWidget *parent = nullptr);
-	~LevelSelector();
+    explicit LevelSelector(QWidget* parent = nullptr);
+    ~LevelSelector();
 
 private:
 	QLabel* label_title;

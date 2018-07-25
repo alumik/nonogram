@@ -19,10 +19,10 @@ bool canLoad() {
 	fstream test;
 	test.open("save.nonogram", ios::in);
 	if (!test) {
-		return true;
+        return false;
 	}
 	test.close();
-	return false;
+    return true;
 }
 
 /**
