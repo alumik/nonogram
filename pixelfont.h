@@ -6,7 +6,10 @@
 class PixelFont : public QFont {
 
 public:
-	PixelFont(const QString &family, int pixelSize = -1, int weight = -1, bool italic = false);
+    explicit PixelFont(const QString &family,
+                       int point_size = -1,
+                       int weight = -1,
+                       bool italic = false);
 };
 
 #endif // PIXELFONT_H

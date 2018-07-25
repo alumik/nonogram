@@ -1,11 +1,10 @@
-﻿#ifndef GAMEWINDOW_H
-#define GAMEWINDOW_H
+﻿#ifndef GAME_WINDOW_H
+#define GAME_WINDOW_H
 
 #include "nonogram.h"
-#include "toolbutton.h"
-#include "menubutton.h"
+#include "tool_button.h"
+#include "menu_button.h"
 
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPixmap>
 
@@ -22,6 +21,10 @@ public:
 	ToolButton* btn_undo;
 	ToolButton* btn_redo;
 	ToolButton* btn_reset;
+
+    explicit GameWindow(QWidget *parent = nullptr);
+    ~GameWindow() override;
+    void onComplete(const QString& name);
 
 private:
     bool can_return;
@@ -47,15 +50,10 @@ private:
 	QHBoxLayout* layout_btn_menu;
 	QVBoxLayout* layout_this;
 
-public:
-	explicit GameWindow(QWidget *parent = nullptr);
-	~GameWindow();
-	void onComplete(QString name);
-
 protected:
-	bool eventFilter(QObject *obj, QEvent *event);
-	void closeEvent(QCloseEvent* event);
-	void showEvent(QShowEvent* event);
+	bool eventFilter(QObject *obj, QEvent *event) override;
+	void closeEvent(QCloseEvent* event) override;
+	void showEvent(QShowEvent* event) override;
 
 private slots:
 	void showMain();
@@ -65,4 +63,4 @@ private slots:
 	void checkedCross();
 };
 
-#endif // GAMEWINDOW_H
+#endif // GAME_WINDOW_H

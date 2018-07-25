@@ -1,7 +1,7 @@
-﻿#include "toolbutton.h"
+﻿#include "tool_button.h"
 #include "define.h"
 
-ToolButton::ToolButton(QIcon icon, QString tip, QWidget* parent, bool checkable, bool noAccentColor)
+ToolButton::ToolButton(const QIcon& icon, const QString& tip, QWidget* parent, const bool checkable, const bool no_accent_color)
 	: QPushButton(parent) {
 	setFixedSize(TOOLBUTTON_SIZE);
 	setFocusPolicy(Qt::NoFocus);
@@ -11,7 +11,7 @@ ToolButton::ToolButton(QIcon icon, QString tip, QWidget* parent, bool checkable,
 	if (checkable) {
 		setCheckable(true);
 	}
-	if (noAccentColor) {
+	if (no_accent_color) {
 		setStyleSheet("QPushButton {"
 						  "border: 3px solid #2b2b2b;"
 						  "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.149999 rgb(120, 120, 120), stop:0.150000 rgb(214, 214, 214));"

@@ -1,7 +1,10 @@
-#include "pixelfont.h"
+﻿#include "pixelfont.h"
 
-PixelFont::PixelFont(const QString &family, int pointSize, int weight, bool italic)
-	: QFont(family, pointSize, weight, italic) {
-	int pixelSize = pointSize * 4 / 3;
-	setPixelSize(pixelSize);
+PixelFont::PixelFont(const QString &family,
+                     const int point_size,
+                     const int weight,
+                     const bool italic)
+	: QFont(family, point_size, weight, italic) {
+	const auto pixel_size = point_size * 4 / 3;
+	setPixelSize(pixel_size);
 }

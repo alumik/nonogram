@@ -1,6 +1,10 @@
 @echo off 
-set /p var= <build.txt 
+set /p var= <build_number.txt 
 set /a var= %var%+1 
-echo %var% >build.txt
-echo #define BUILD %var% //编译次数总计>build.h
-echo %var%
+echo %var% >build_number.txt
+echo #ifndef BUILD_NUMBER_H>build_number.h
+echo #define BUILD_NUMBER_H>>build_number.h
+echo.>>build_number.h
+echo #define BUILD_NUMBER %var%>>build_number.h
+echo.>>build_number.h
+echo #endif // BUILD_NUMBER_H>>build_number.h

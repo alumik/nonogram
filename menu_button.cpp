@@ -1,13 +1,13 @@
-﻿#include "menubutton.h"
+﻿#include "menu_button.h"
 #include "define.h"
 #include "pixelfont.h"
 
-MenuButton::MenuButton(QString caption, QWidget* parent, bool noAccentColor)
+MenuButton::MenuButton(const QString& caption, QWidget* parent, const bool no_accent_color)
 	: QPushButton(caption, parent) {
 	setFont(PixelFont("Microsoft YaHei UI", BUTTON_FONT_SIZE, 75));
 	setFocusPolicy(Qt::NoFocus);
 	setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-	if (noAccentColor) {
+	if (no_accent_color) {
 		setStyleSheet("QPushButton {"
 						  "color: rgb(43, 43, 43);"
 						  "border: 2px solid #555555;"

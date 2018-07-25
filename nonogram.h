@@ -1,7 +1,7 @@
 ﻿#ifndef NONOGRAM_H
 #define NONOGRAM_H
 
-#include "nonogrampreview.h"
+#include "nonogram_preview.h"
 
 #include <QTableWidget>
 #include <QVector>
@@ -9,13 +9,13 @@
 #include <QLabel>
 #include <QMouseEvent>
 
-struct gameMove {
+struct GameMove {
 	int row;
 	int column;
-	QColor newBackgroundColor;
-	QString newText;
-	QColor oldBackgroundColor;
-	QString oldText;
+	QColor new_background_color;
+	QString new_text;
+	QColor old_background_color;
+	QString old_text;
 };
 
 class Nonogram : public QTableWidget {
@@ -23,52 +23,53 @@ class Nonogram : public QTableWidget {
 
 public:
 	int index;
-	int gameRow;
-	int gameColumn;
-	int hintRow;
-	int hintColumn;
+	int game_row;
+	int game_column;
+	int hint_row;
+	int hint_column;
 	int table_width;
 	int table_height;
-	NonogramPreview* nonogramPreview;
+	NonogramPreview* nonogram_preview;
 	void checkLineComplete(int r, int c);
 	bool complete;
-
-public:
-	Nonogram(QWidget* parent = nullptr);
+	explicit Nonogram(QWidget* parent = nullptr);
 
 private:
-	int lastR;
-	int lastC;
-	int currentR;
-	int currentC;
-	int recordR;
-	int recordC;
-	int dragR;
-	int dragC;
-	bool mousePressed;
+	int last_r;
+	int last_c;
+	int current_r;
+	int current_c;
+	int record_r;
+	int record_c;
+	int drag_r;
+	int drag_c;
+	bool mouse_pressed;
 	QLabel* preview;
-	QLabel* dragSize;
-	QVector<gameMove> undos;
-	QVector<gameMove> redos;
-	bool canAct(int r, int c);
-	bool crossHighlight(int r, int c);
-	void eraseCrossHighlight();
+	QLabel* drag_size;
+	QVector<GameMove> undos;
+	QVector<GameMove> redos;
+	bool canAct(int r, int c) const;
+	bool crossHighlight(int r, int c) const;
+	void eraseCrossHighlight() const;
 	void areaHighlight();
 	void eraseAreaHighlight();
-	void record(int r, int c, QColor newBackgroundColor, QString newText);
+    void record(int r,
+                int c,
+                const QColor& new_background_color,
+                const QString& new_text);
 	void checkGameComplete();
 
 protected:
-	void mousePressEvent(QMouseEvent* event);
-	void mouseReleaseEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+
+public slots:
+    void undo();
+    void redo();
+    void resetGame();
 
 private slots:
 	void getBlock(const QModelIndex& index);
-
-public slots:
-	void undo();
-	void redo();
-	void resetGame();
 };
 
 #endif // NONOGRAM_H
