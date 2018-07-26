@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Nonogram
 TEMPLATE = app
 
-VERSION = 2.7.4.0
+VERSION = 2.8.0.1
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -60,7 +60,7 @@ HEADERS += \
     util_generic_define.h \
     util_pvector.h
 
-RC_ICONS = images\icon_dark_new.ico
+RC_ICONS = images\icon_game_dark.ico
 
 RESOURCES += \
     icon.qrc

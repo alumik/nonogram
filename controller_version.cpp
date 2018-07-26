@@ -1,6 +1,6 @@
 ﻿#include "controller_version.h"
 
-const QString VersionController::VERSION_NUMBER = QString("2.8.0.0");
+const QString VersionController::VERSION_NUMBER = QString("2.8.0.1");
 const QDate VersionController::BUILD_DATE = QLocale(QLocale::English).toDate(QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
 const QTime VersionController::BUILD_TIME = QTime::fromString(__TIME__, "hh:mm:ss");
 const bool VersionController::RELEASE_STATE = false;

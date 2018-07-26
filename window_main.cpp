@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
     // 创建图标
     label_icon = new QLabel(this);
     label_icon->setFixedSize(GAME_ICON_SIZE);
-    QPixmap icon(QString(":/game/icon-white"));
+    QPixmap icon(QString(":/icon/icon-game-white"));
     icon = icon.scaled(label_icon->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     label_icon->setPixmap(icon);
 

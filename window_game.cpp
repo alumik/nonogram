@@ -31,7 +31,7 @@ GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     game_widget = new Nonogram(this);
 
     // 图片素材
-    icon_tools = QPixmap(":/button/icon-button");
+    icon_tools = QPixmap(":/icon/icon-buttons");
     icon_paint = icon_tools.copy(0, 0, 96, 96);
     icon_erase = icon_tools.copy(96, 0, 96, 96);
     icon_cross = icon_tools.copy(192, 0, 96, 96);
@@ -39,7 +39,7 @@ GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     icon_erase_checked = icon_tools.copy(96, 96, 96, 96);
     icon_cross_checked = icon_tools.copy(192, 96, 96, 96);
 
-    cursor_tools = QPixmap(":/cursor/tool");
+    cursor_tools = QPixmap(":/cursor/cursor-tools");
     cursor_paint = cursor_tools.copy(3,3,23,23);
     cursor_erase = cursor_tools.copy(33,3,23,23);
     cursor_cross = cursor_tools.copy(63,3,23,23);
