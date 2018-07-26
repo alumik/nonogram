@@ -2,15 +2,16 @@
 #define NONOGRAM_H
 
 #include "nonogram_preview.h"
+#include "nonogram_data.h"
+#include "util_pvector.h"
 
 #include <QTableWidget>
 #include <QVector>
-#include <QColor>
 #include <QLabel>
 #include <QMouseEvent>
 
 struct GameMove {
-    QPoint position;
+    PVector pos;
     QString old_text;
 	QString new_text;
 	QColor old_background_color;
@@ -25,35 +26,40 @@ public:
 
 	explicit Nonogram(QWidget* parent = nullptr);
 
-    QPoint getTableSize();
-    QPoint getHintGrid();
+    PVector getTableSize();
+    PVector getHintGrid();
     void save();
     void load(std::ifstream& loader);
     bool isComplete();
 
 private:
-    int index;
     bool complete;
     bool mouse_pressed;
-    QPoint game_grid;
-    QPoint hint_grid;
-    QPoint table_size;
-    QPoint last_position;
-    QPoint current_position;
-    QPoint record_position;
-    QPoint drag_position;
+
+    int index;
+    QString title;
+    PVector game_grid;
+    Hint hint;
+
+    PVector table_size;
+
+    PVector last_pos;
+    PVector current_pos;
+    PVector record_pos;
+    PVector drag_pos;
+
     QLabel* label_preview;
-    QLabel* label_drag_size;
+    QLabel* label_drag;
 	QVector<GameMove> undos;
 	QVector<GameMove> redos;
 
-    bool canAct(QPoint position) const;
-    bool crossHighlight(QPoint position) const;
+    bool canAct(PVector pos) const;
+    bool crossHighlight(PVector pos) const;
 	void eraseCrossHighlight() const;
 	void areaHighlight();
 	void eraseAreaHighlight();
-    void record(QPoint position, const QColor& new_background_color, const QString& new_text);
-    void checkLineComplete(QPoint position);
+    void record(PVector pos, const QColor& new_background_color, const QString& new_text);
+    void checkLineComplete(PVector pos);
     void checkGameComplete();
 
 protected:

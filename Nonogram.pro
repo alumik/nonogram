@@ -41,7 +41,8 @@ SOURCES += \
     window_main.cpp \
     util_pixel_font.cpp \
     window_level_selector.cpp \
-    window_info.cpp
+    window_info.cpp \
+    util_pvector.cpp
 
 HEADERS += \
     nonogram_data.h \
@@ -58,7 +59,8 @@ HEADERS += \
     button_menu.h \
     controller_game.h \
     util_build_number.h \
-    util_generic_define.h
+    util_generic_define.h \
+    util_pvector.h
 
 RC_ICONS = images\icon_dark_new.ico
 

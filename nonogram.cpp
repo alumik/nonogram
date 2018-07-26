@@ -719,7 +719,7 @@ void Nonogram::load(std::ifstream& loader) {
                 case 1:
                     item(row, column)->setBackgroundColor(DARK_COLOR);
                     nonogram_preview->updatePreview(row, column, Qt::black);
-                    checkLineComplete(QPoint(row, column));
+                    checkLineComplete(PVector(row, column));
                     break;
                 case 2:
                     item(row, column)->setText(QString("╳"));

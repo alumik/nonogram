@@ -234,23 +234,23 @@ void GameWindow::closeEvent(QCloseEvent *event) {
  */
 void GameWindow::showEvent(QShowEvent* event) {
 	QWidget::showEvent(event);
-    resize(game_widget->table_width + 60, game_widget->table_height + SPACING_LARGE * 2 + 60 + BUTTON_HEIGHT + 10 + BUTTON_HEIGHT);
+    resize(game_widget->getTableSize().width() + 60, game_widget->getTableSize().height() + SPACING_LARGE * 2 + 60 + BUTTON_HEIGHT + 10 + BUTTON_HEIGHT);
     auto desktop_geometry = QGuiApplication::screens()[0]->availableGeometry();
-    QPoint position(
+    PVector pos(
         GameController::stacked_window->pos().x() + (GameController::stacked_window->frameGeometry().width() - frameGeometry().width()) / 2,
         GameController::stacked_window->pos().y() + (GameController::stacked_window->frameGeometry().height() - frameGeometry().height()) / 2
     );
-    if (position.x() < 8) {
-        position.setX(8);
-    } else if (position.x() + frameGeometry().width() > desktop_geometry.width()) {
-        position.setX(desktop_geometry.width() - frameGeometry().width() - 8);
+    if (pos.x() < 8) {
+        pos.x() = 8;
+    } else if (pos.x() + frameGeometry().width() > desktop_geometry.width()) {
+        pos.x() = desktop_geometry.width() - frameGeometry().width() - 8;
 	}
-    if (position.y() < 8) {
-        position.setY(8);
-    } else if (position.y() + frameGeometry().height() > desktop_geometry.height()) {
-        position.setY(desktop_geometry.height() - frameGeometry().height() - 8);
+    if (pos.y() < 8) {
+        pos.y() = 8;
+    } else if (pos.y() + frameGeometry().height() > desktop_geometry.height()) {
+        pos.y() = desktop_geometry.height() - frameGeometry().height() - 8;
 	}
-    move(position);
+    move(pos.x(), pos.y());
 }
 
 /**

@@ -1,19 +1,24 @@
 ﻿#ifndef NONOGRAM_DATA_H
 #define NONOGRAM_DATA_H
 
+#include "util_pvector.h"
+
 #include <QString>
-#include <QPoint>
+
+struct HintSide {
+    int size;
+    int data[10][50];
+};
 
 struct Hint {
-    int horizontal[10][50];
-    int vertical[10][50];
+    HintSide top;
+    HintSide left;
 };
 
 struct NonogramData {
 	int index;
     QString title;
-    QPoint game_grid;
-    QPoint hint_grid;
+    PVector game_grid;
     Hint hint;
 };
 
