@@ -33,6 +33,9 @@ public:
     bool isComplete();
 
 private:
+    static const int NO_HINT = 0;
+    static const int SEPARATOR_HINT = -1;
+
     bool complete;
     bool mouse_pressed;
 
@@ -61,6 +64,7 @@ private:
     void record(PVector pos, const QColor& new_background_color, const QString& new_text);
     void checkLineComplete(PVector pos);
     void checkGameComplete();
+    void loadGameMeta();
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;
