@@ -6,15 +6,15 @@ ToolButton::ToolButton(const QIcon& icon,
                        QWidget* parent,
                        const bool checkable,
                        const bool accent_color)
-	: QPushButton(parent) {
-	setFixedSize(TOOL_BUTTON_SIZE);
-	setFocusPolicy(Qt::NoFocus);
-	setIcon(icon);
-	setToolTip(tip);
-	setIconSize(QSize(TOOL_BUTTON_ICON_SIZE));
-	if (checkable) {
-		setCheckable(true);
-	}
+    : QPushButton(parent) {
+    setFixedSize(TOOL_BUTTON_SIZE);
+    setFocusPolicy(Qt::NoFocus);
+    setIcon(icon);
+    setToolTip(tip);
+    setIconSize(QSize(TOOL_BUTTON_ICON_SIZE));
+    if (checkable) {
+        setCheckable(true);
+    }
     if (accent_color) {
         setStyleSheet(
             "QPushButton {"
@@ -34,7 +34,7 @@ ToolButton::ToolButton(const QIcon& icon,
                 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.149999 rgb(200, 125, 60), stop:0.150000 rgb(205, 170, 140));"
             "}"
         );
-	} else {
+    } else {
         setStyleSheet(
             "QPushButton {"
                 "border: 3px solid #2b2b2b;"
@@ -53,5 +53,5 @@ ToolButton::ToolButton(const QIcon& icon,
                 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.149999 rgb(255, 160, 70), stop:0.150000 rgb(240, 230, 190));"
             "}"
         );
-	}
+    }
 }

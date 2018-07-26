@@ -29,7 +29,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     nonogram.cpp \
-    line_reader.cpp \
     nonogram_data.cpp \
     nonogram_preview.cpp \
     window_game.cpp \
@@ -41,8 +40,7 @@ SOURCES += \
     window_main.cpp \
     util_pixel_font.cpp \
     window_level_selector.cpp \
-    window_info.cpp \
-    util_pvector.cpp
+    window_info.cpp
 
 HEADERS += \
     nonogram_data.h \

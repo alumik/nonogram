@@ -16,7 +16,7 @@ struct Hint {
 };
 
 struct NonogramData {
-	int index;
+    int index;
     QString title;
     PVector game_grid;
     Hint hint;

@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 class MenuButton : public QPushButton {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit MenuButton(const QString& caption,

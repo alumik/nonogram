@@ -7,28 +7,28 @@
 #include <QLabel>
 
 class MainWindow : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-	~MainWindow();
+    ~MainWindow();
 
     void checkBtnLoad();
 
 private:
-	QLabel* label_icon;
+    QLabel* label_icon;
     QLabel* label_game_title;
     QLabel* label_game_title_secondary;
-	MenuButton* btn_start;
+    MenuButton* btn_start;
     MenuButton* btn_load;
-	MenuButton* btn_about;
-	MenuButton* btn_exit;
-	QVBoxLayout* layout_title;
-	QHBoxLayout* layout_btn;
-	QVBoxLayout* layout_this;
+    MenuButton* btn_about;
+    MenuButton* btn_exit;
+    QVBoxLayout* layout_title;
+    QHBoxLayout* layout_btn;
+    QVBoxLayout* layout_this;
 
 private slots:
-	void showAbout();
+    void showAbout();
     void showLevelSelector();
     static void onLoadGame();
 };

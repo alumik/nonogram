@@ -3,10 +3,10 @@
 #include "util_pixel_font.h"
 
 MenuButton::MenuButton(const QString& caption, QWidget* parent, const bool accent_color)
-	: QPushButton(caption, parent) {
-	setFont(PixelFont("Microsoft YaHei UI", BUTTON_FONT_SIZE, 75));
-	setFocusPolicy(Qt::NoFocus);
-	setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+    : QPushButton(caption, parent) {
+    setFont(PixelFont("Microsoft YaHei UI", BUTTON_FONT_SIZE, 75));
+    setFocusPolicy(Qt::NoFocus);
+    setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);
     if (accent_color) {
         setStyleSheet(
             "QPushButton {"
@@ -27,7 +27,7 @@ MenuButton::MenuButton(const QString& caption, QWidget* parent, const bool accen
                 "background-color: qconicalgradient(cx:0.1, cy:0.5, angle:92, stop:0.49999 rgb(200, 125, 60), stop:0.50001 rgb(205, 170, 140));"
             "}"
         );
-	} else {
+    } else {
         setStyleSheet(
             "QPushButton {"
                 "color: rgb(43, 43, 43);"

@@ -7,23 +7,23 @@
  * \param parent 父部件指针
  */
 StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
-	// 设置窗口标题
-	setWindowTitle(tr("Nonogram"));
+    // 设置窗口标题
+    setWindowTitle(tr("Nonogram"));
 
-	// 设置窗口颜色
+    // 设置窗口颜色
     GameController::setBackgroundColor(this, DARK_COLOR);
 
-	// 设置初始窗口大小
-	resize(DEFAULT_WINDOW_SIZE);
+    // 设置初始窗口大小
+    resize(DEFAULT_WINDOW_SIZE);
 
-	// 创建主界面和游戏选择界面
-	main_window = new MainWindow(this);
+    // 创建主界面和游戏选择界面
+    main_window = new MainWindow(this);
     level_selector = new LevelSelectorWindow(this);
 
-	// 创建布局
+    // 创建布局
     layout_this = new QStackedLayout();
-	setLayout(layout_this);
-	layout_this->addWidget(main_window);
+    setLayout(layout_this);
+    layout_this->addWidget(main_window);
     layout_this->addWidget(level_selector);
 }
 
@@ -32,7 +32,7 @@ StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
  * \param index 页面索引
  */
 void StackedWindow::setIndex(const int index) const {
-	layout_this->setCurrentIndex(index);
+    layout_this->setCurrentIndex(index);
 }
 
 void StackedWindow::checkBtnLoad() {
@@ -43,6 +43,6 @@ void StackedWindow::checkBtnLoad() {
  * \brief 析构函数
  */
 StackedWindow::~StackedWindow() {
-	delete layout_this;
-	layout_this = nullptr;
+    delete layout_this;
+    layout_this = nullptr;
 }

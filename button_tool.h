@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 class ToolButton : public QPushButton {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     ToolButton(const QIcon& icon,

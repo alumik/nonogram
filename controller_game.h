@@ -15,11 +15,10 @@ public:
     static bool canLoadGame();
     static void loadGame();
     static void startGame();
-
-    static QVector<int> readRow(const int row, Nonogram* nonogram){}
-    static QVector<int> readColumn(const int column, Nonogram* nonogram){}
-    static QVector<int> readHintRow(const int row, Nonogram* nonogram){}
-    static QVector<int> readHintColumn(const int column, Nonogram* nonogram){}
+    static void setUndo(bool enable);
+    static void setRedo(bool enable);
+    static void setReset(bool enable);
+    static void setModified(bool modified);
 };
 
 #endif // CONTROLLER_GAME_H

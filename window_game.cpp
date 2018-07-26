@@ -22,7 +22,7 @@ GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     tool_type = GameWindow::TOOL_PAINT;
 
     // 设置窗口标题
-	setWindowTitle(tr("Nonogram[*]"));
+    setWindowTitle(tr("Nonogram[*]"));
 
     // 设置窗口颜色
     GameController::setBackgroundColor(this, DARK_COLOR);
@@ -120,29 +120,29 @@ GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
  * \brief 回到主界面
  */
 void GameWindow::showMain() {
-	close();
+    close();
     if (can_return) {
         GameController::stacked_window->setIndex(StackedWindow::MAIN_WINDOW_INDEX);
         GameController::stacked_window->checkBtnLoad();
         GameController::stacked_window->show();
         GameController::stacked_window->activateWindow();
-	}
+    }
 }
 
 /**
  * \brief 显示帮助界面
  */
 void GameWindow::showHelp() {
-	InfoWindow info(tr("<font color=\"#FF7800\">Nonogram</font> 是一种逻辑游戏，玩家在游戏中以猜谜的方式画图。<br><br>"
-					   "在一个网格中，每行每列的开头都有一组数。玩家需要根据它们来填充格子，<br>"
-					   "最后可以得出一幅图画，谓之网格画。<br><br>"
-					   "例如“4 8 1 1”是指该行（或该列）上，按照数字顺序，有四条<font color=\"#FF7800\">连续的</font>由格子连成的线，<br>"
-					   "四条线分别占了4格、8格、1格和1格。每条线之间最少要有一个空格。<br>"
-					   "即“████ ████████ █ █”。<font color=\"#FF7800\">线条间可以间隔多个空格</font>，但<font color=\"#FF7800\">线条的顺序不能变</font>。<br><br>"
-					   "玩家应尽量用“╳”号标记一定不需要填充的格子，以辅助判断。"),
+    InfoWindow info(tr("<font color=\"#FF7800\">Nonogram</font> 是一种逻辑游戏，玩家在游戏中以猜谜的方式画图。<br><br>"
+                       "在一个网格中，每行每列的开头都有一组数。玩家需要根据它们来填充格子，<br>"
+                       "最后可以得出一幅图画，谓之网格画。<br><br>"
+                       "例如“4 8 1 1”是指该行（或该列）上，按照数字顺序，有四条<font color=\"#FF7800\">连续的</font>由格子连成的线，<br>"
+                       "四条线分别占了4格、8格、1格和1格。每条线之间最少要有一个空格。<br>"
+                       "即“████ ████████ █ █”。<font color=\"#FF7800\">线条间可以间隔多个空格</font>，但<font color=\"#FF7800\">线条的顺序不能变</font>。<br><br>"
+                       "玩家应尽量用“╳”号标记一定不需要填充的格子，以辅助判断。"),
                        1,
                        this);
-	info.exec();
+    info.exec();
 }
 
 /**
@@ -192,12 +192,12 @@ void GameWindow::checkedCross() {
  */
 bool GameWindow::eventFilter(QObject *obj, QEvent *event) {
     if (obj == game_widget->viewport()) {
-	    return event->type() == QEvent::MouseButtonPress 
-    		|| event->type() == QEvent::MouseButtonRelease 
-    		|| event->type() == QEvent::MouseMove 
-    		|| event->type() == QEvent::MouseButtonDblClick;
+        return event->type() == QEvent::MouseButtonPress 
+            || event->type() == QEvent::MouseButtonRelease 
+            || event->type() == QEvent::MouseMove 
+            || event->type() == QEvent::MouseButtonDblClick;
     } 
-	return QWidget::eventFilter(obj, event);
+    return QWidget::eventFilter(obj, event);
 }
 
 /**
@@ -206,26 +206,26 @@ bool GameWindow::eventFilter(QObject *obj, QEvent *event) {
  */
 void GameWindow::closeEvent(QCloseEvent *event) {
     if (isWindowModified() && !game_widget->isComplete()) {
-		InfoWindow info(tr("是否保存游戏进度？"), 3, this);
+        InfoWindow info(tr("是否保存游戏进度？"), 3, this);
         const auto response = info.exec();
         if (response == QDialog::Accepted) {
             game_widget->save();
-			event->accept();
+            event->accept();
             can_return = true;
         } else if (response == 3) {
-			event->ignore();
+            event->ignore();
             can_return = false;
-		} else {
-			event->accept();
+        } else {
+            event->accept();
             can_return = true;
-		}
-	} else {
-        if (game_widget->isComplete()) {
-			remove("save.nonogram");
         }
-		event->accept();
+    } else {
+        if (game_widget->isComplete()) {
+            remove(SAVE_NAME);
+        }
+        event->accept();
         can_return = true;
-	}
+    }
 }
 
 /**
@@ -233,7 +233,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
  * \param event
  */
 void GameWindow::showEvent(QShowEvent* event) {
-	QWidget::showEvent(event);
+    QWidget::showEvent(event);
     resize(game_widget->getTableSize().width() + 60, game_widget->getTableSize().height() + SPACING_LARGE * 2 + 60 + BUTTON_HEIGHT + 10 + BUTTON_HEIGHT);
     auto desktop_geometry = QGuiApplication::screens()[0]->availableGeometry();
     PVector pos(
@@ -244,12 +244,12 @@ void GameWindow::showEvent(QShowEvent* event) {
         pos.x() = 8;
     } else if (pos.x() + frameGeometry().width() > desktop_geometry.width()) {
         pos.x() = desktop_geometry.width() - frameGeometry().width() - 8;
-	}
-    if (pos.y() < 8) {
-        pos.y() = 8;
+    }
+    if (pos.y() < 16) {
+        pos.y() = 16;
     } else if (pos.y() + frameGeometry().height() > desktop_geometry.height()) {
         pos.y() = desktop_geometry.height() - frameGeometry().height() - 8;
-	}
+    }
     move(pos.x(), pos.y());
 }
 
@@ -272,7 +272,7 @@ void GameWindow::showComplete(const QString& title) {
     layout_this->addWidget(btn_back, 0, Qt::AlignCenter);
 
     InfoWindow info(tr(R"(恭喜您，游戏<font color="#ff7800"> “%1” </font>已完成！)").arg(title), 1, this);
-	info.exec();
+    info.exec();
 }
 
 int GameWindow::getToolType() {
