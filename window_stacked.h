@@ -15,6 +15,7 @@ public:
 
     explicit StackedWindow(QWidget* parent = nullptr);
 	~StackedWindow();
+
     void setIndex(int index) const;
     void checkBtnLoad();
 

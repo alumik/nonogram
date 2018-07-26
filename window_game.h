@@ -16,7 +16,6 @@ public:
     static const int TOOL_ERASE = 1;
     static const int TOOL_CROSS = 2;
 
-	int tool_type;
 	Nonogram* game_widget;
 	ToolButton* btn_undo;
 	ToolButton* btn_redo;
@@ -24,9 +23,12 @@ public:
 
     explicit GameWindow(QWidget* parent = nullptr);
     ~GameWindow() override;
-    void showComplete(const QString& name);
+
+    int getToolType();
+    void showComplete(const QString& title);
 
 private:
+    int tool_type;
     bool can_return;
 	QPixmap cursor_tools;
 	QPixmap cursor_paint;

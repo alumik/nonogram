@@ -668,31 +668,31 @@ void Nonogram::checkGameComplete() {
 			}
 		}
 
-		for (auto r = 0; r < hint_row; r++) {
+        for (auto r = 0; r < hint_grid.x(); r++) {
 			setRowHeight(r, 0);
 		}
-		for (auto c = 0; c < hint_column; c++) {
+        for (auto c = 0; c < hint_grid.y(); c++) {
 			setColumnWidth(c, 0);
 		}
-		for (auto r = hint_row; r < rowCount(); r += 6) {
+        for (auto r = hint_grid.x(); r < rowCount(); r += 6) {
 			setRowHeight(r, 0);
 		}
-		for (auto c = hint_column; c < columnCount(); c += 6) {
+        for (auto c = hint_grid.y(); c < columnCount(); c += 6) {
 			setColumnWidth(c, 0);
 		}
 
 		undos.clear();
 		redos.clear();
-		preview->hide();
-        GameController::game_window->showComplete(global_nonogram_data[index].name);
+        label_preview->hide();
+        GameController::game_window->showComplete(nonogram_data[index].title);
 	}
 }
 
 void Nonogram::save() {
     std::ofstream saver("save.nonogram");
     saver << index << std::endl;
-    for (auto r = hint_row + 1; r < rowCount(); r++) {
-        for (auto c = hint_column + 1; c < columnCount(); c++) {
+    for (auto r = hint_grid.x() + 1; r < rowCount(); r++) {
+        for (auto c = hint_grid.y() + 1; c < columnCount(); c++) {
             const auto c_color = item(r, c)->backgroundColor();
             const auto c_text = item(r, c)->text();
             if ((c_color == PRIMARY_COLOR || c_color == CROSS_HIGHLIGHT_COLOR) && c_text == QString("")) {
@@ -701,11 +701,30 @@ void Nonogram::save() {
                 saver << 1 << " ";
             } else if ((c_color == PRIMARY_COLOR || c_color == CROSS_HIGHLIGHT_COLOR) && c_text == QString("╳")) {
                 saver << 2 << " ";
-            } else if (c_color == SECONDARY_SPLITER_COLOR) {
+            } else if (c_color == SECONDARY_SEPARATOR_COLOR) {
                 saver << -1 << " ";
             }
         }
         saver << std::endl;
     }
     saver.close();
+}
+
+void Nonogram::load(std::ifstream& loader) {
+    for (auto row = getHintGrid().x() + 1; row < rowCount(); row++) {
+        for (auto column = getHintGrid().y() + 1; column < columnCount(); column++) {
+            int state;
+            loader >> state;
+            switch (state) {
+                case 1:
+                    item(row, column)->setBackgroundColor(DARK_COLOR);
+                    nonogram_preview->updatePreview(row, column, Qt::black);
+                    checkLineComplete(QPoint(row, column));
+                    break;
+                case 2:
+                    item(row, column)->setText(QString("╳"));
+                default: ;
+            }
+        }
+    }
 }

@@ -17,14 +17,14 @@
 #define DEFAULT_WINDOW_SIZE       400, 550
 
 #define BLOCK_SIZE                25
-#define SPLITER_SIZE              2
+#define SEPARATOR_SIZE              2
 
 #define PRIMARY_COLOR             QColor(204, 204, 204)
 #define DARK_COLOR                QColor(43, 43, 43)
 #define ACCENT_COLOR              QColor(255, 120, 0)
 
-#define MAIN_SPLITER_COLOR        Qt::white
-#define SECONDARY_SPLITER_COLOR   Qt::black
+#define MAIN_SEPARATOR_COLOR        Qt::white
+#define SECONDARY_SEPARATOR_COLOR   Qt::black
 
 #define HINT_TEXT_COLOR           Qt::white
 #define HINT_UNSOLVED_COLOR       DARK_COLOR

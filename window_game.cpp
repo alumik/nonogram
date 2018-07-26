@@ -205,7 +205,7 @@ bool GameWindow::eventFilter(QObject *obj, QEvent *event) {
  * \param event
  */
 void GameWindow::closeEvent(QCloseEvent *event) {
-    if (isWindowModified() && !game_widget->complete) {
+    if (isWindowModified() && !game_widget->isComplete()) {
 		InfoWindow info(tr("是否保存游戏进度？"), 3, this);
         const auto response = info.exec();
         if (response == QDialog::Accepted) {
@@ -220,7 +220,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
             can_return = true;
 		}
 	} else {
-        if (game_widget->complete) {
+        if (game_widget->isComplete()) {
 			remove("save.nonogram");
         }
 		event->accept();
@@ -255,9 +255,9 @@ void GameWindow::showEvent(QShowEvent* event) {
 
 /**
  * \brief 游戏结束后调整界面显示
- * \param name
+ * \param title
  */
-void GameWindow::showComplete(const QString& name) {
+void GameWindow::showComplete(const QString& title) {
     btn_help->setVisible(false);
     btn_paint->setVisible(false);
     btn_erase->setVisible(false);
@@ -271,8 +271,12 @@ void GameWindow::showComplete(const QString& name) {
     layout_this->addWidget(label_game_title, 0, Qt::AlignCenter);
     layout_this->addWidget(btn_back, 0, Qt::AlignCenter);
 
-	InfoWindow info(tr(R"(恭喜您，游戏<font color="#ff7800"> “%1” </font>已完成！)").arg(name), 1, this);
+    InfoWindow info(tr(R"(恭喜您，游戏<font color="#ff7800"> “%1” </font>已完成！)").arg(title), 1, this);
 	info.exec();
+}
+
+int GameWindow::getToolType() {
+    return tool_type;
 }
 
 /**
