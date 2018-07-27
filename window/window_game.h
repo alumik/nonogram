@@ -24,7 +24,7 @@ public:
     explicit GameWindow(QWidget* parent = nullptr);
     ~GameWindow() override;
 
-    int getToolType();
+    int getToolType() const;
     void showComplete(const QString& title);
 
 private:

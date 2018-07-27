@@ -7,13 +7,19 @@
 #include <QHeaderView>
 #include <fstream>
 
+/**
+ * \brief 网格画构造函数
+ * \param parent 父部件指针
+ */
 Nonogram::Nonogram(QWidget* parent) : QTableWidget(parent) {
-    loadGameMeta();
-
-    PVector hint_grid(hint.left.size, hint.top.size);
+    index = GameController::nonogram_index;
+    title = global_nonogram_data[index].title;
+    game_grid = global_nonogram_data[index].game_grid;
+    hint = global_nonogram_data[index].hint;
+	const PVector hint_grid(hint.left.size, hint.top.size);
     last_pos = hint_grid + 1;
 
-    PVector separator = game_grid / 5;
+	auto separator = game_grid / 5;
     if (game_grid.column() % 5 == 0) {
         separator.column()--;
     }
@@ -21,13 +27,13 @@ Nonogram::Nonogram(QWidget* parent) : QTableWidget(parent) {
         separator.row()--;
     }
 
-    PVector table_grid = game_grid + hint_grid + separator + 1;
+	auto table_grid = game_grid + hint_grid + separator + 1;
     setColumnCount(table_grid.column());
     setRowCount(table_grid.row());
 
     table_size = (game_grid + hint_grid) * BLOCK_SIZE + (separator + 1) * SEPARATOR_SIZE + 2;
-    table_size.sepCompare(635, std::less<int>());
-    PVector min_size = PVector::sepCompare(table_size, 15 * BLOCK_SIZE, std::less<int>());
+    table_size.sepCompare(635, std::less<>());
+    auto min_size = PVector::sepCompare(table_size, 15 * BLOCK_SIZE, std::less<>());
     setMinimumWidth(min_size.width());
     setMinimumHeight(min_size.height());
 
@@ -135,6 +141,11 @@ Nonogram::Nonogram(QWidget* parent) : QTableWidget(parent) {
     connect(this, &QAbstractItemView::entered, this, &Nonogram::getBlock);
 }
 
+/**
+ * \brief 判断鼠标所在网格是否可操作
+ * \param pos 位置
+ * \return 
+ */
 bool Nonogram::canAct(PVector pos) const {
     for (auto column = hint.left.size; column < columnCount(); column += 6) {
         if (column == pos.column()) {
@@ -146,12 +157,14 @@ bool Nonogram::canAct(PVector pos) const {
             return false;
         }
     }
-    if (pos.column() < hint.left.size || pos.row() < hint.top.size) {
-        return false;
-    }
-    return true;
+	return !(pos.column() < hint.left.size || pos.row() < hint.top.size);
 }
 
+/**
+ * \brief 以指定位置为中心进行十字高亮
+ * \param pos 位置
+ * \return 
+ */
 bool Nonogram::crossHighlight(PVector pos) {
     if (!canAct(pos)) {
         return false;
@@ -193,7 +206,10 @@ bool Nonogram::crossHighlight(PVector pos) {
     return true;
 }
 
-void Nonogram::eraseCrossHighlight() {
+/**
+ * \brief 删除上一次的十字高亮
+ */
+void Nonogram::eraseLastCrossHighlight() {
     for (auto row = 0; row < hint.top.size; row++) {
         const auto hint_data = hint.top.data[row][last_cross_highlighted_pos.column() - (hint.left.size + 1)];
         if (hint_data != Nonogram::NO_HINT && hint_data != Nonogram::SEPARATOR_HINT) {
@@ -227,10 +243,13 @@ void Nonogram::eraseCrossHighlight() {
     }
 }
 
+/**
+ * \brief 区域高亮
+ */
 void Nonogram::areaHighlight() {
-    PVector max_pos = PVector::sepCompare(current_pos, record_pos, std::greater<int>());
-    PVector min_pos = PVector::sepCompare(current_pos, record_pos, std::less<int>());
-    min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<int>());
+	auto max_pos = PVector::sepCompare(current_pos, record_pos, std::greater<>());
+	auto min_pos = PVector::sepCompare(current_pos, record_pos, std::less<>());
+    min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<>());
 
     for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
         if (crossHighlight(PVector(column, min_pos.row()))) {
@@ -256,10 +275,13 @@ void Nonogram::areaHighlight() {
     }
 }
 
+/**
+ * \brief 删除区域高亮
+ */
 void Nonogram::eraseAreaHighlight() {
-    PVector max_pos = PVector::sepCompare(last_pos, record_pos, std::greater<int>());
-    PVector min_pos = PVector::sepCompare(last_pos, record_pos, std::less<int>());
-    min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<int>());
+	auto max_pos = PVector::sepCompare(last_pos, record_pos, std::greater<>());
+	auto min_pos = PVector::sepCompare(last_pos, record_pos, std::less<>());
+    min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<>());
 
     for (auto row = min_pos.row(); row <= max_pos.row(); row++) {
         for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
@@ -273,20 +295,24 @@ void Nonogram::eraseAreaHighlight() {
 
     for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
         last_cross_highlighted_pos.column() = column;
-        eraseCrossHighlight();
+        eraseLastCrossHighlight();
     }
 
     for (auto row = min_pos.row(); row <= max_pos.row(); row++) {
         last_cross_highlighted_pos.row() = row;
-        eraseCrossHighlight();
+        eraseLastCrossHighlight();
     }
 }
 
+/**
+ * \brief 获取当前鼠标所在网格坐标并进行记录
+ * \param index 鼠标位置
+ */
 void Nonogram::getBlock(const QModelIndex& index) {
     current_pos = PVector(index.column(), index.row());
     if (canAct(current_pos)) {
         if (!mouse_pressed) {
-            eraseCrossHighlight();
+            eraseLastCrossHighlight();
             crossHighlight(current_pos);
         } else if (canAct(record_pos)) {
             eraseAreaHighlight();
@@ -300,6 +326,10 @@ void Nonogram::getBlock(const QModelIndex& index) {
     }
 }
 
+/**
+ * \brief 鼠标按下事件响应
+ * \param event 鼠标按下事件
+ */
 void Nonogram::mousePressEvent(QMouseEvent* event) {
     QTableWidget::mousePressEvent(event);
     if (event->button() == Qt::LeftButton) {
@@ -308,16 +338,20 @@ void Nonogram::mousePressEvent(QMouseEvent* event) {
     }
 }
 
+/**
+ * \brief 鼠标松开事件响应
+ * \param event 鼠标松开事件
+ */
 void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
     QTableWidget::mouseReleaseEvent(event);
     if (event->button() == Qt::LeftButton) {
         mouse_pressed =false;
         label_drag->setVisible(false);
 
-        PVector max_pos = PVector::sepCompare(current_pos, record_pos, std::greater<int>());
-        PVector min_pos = PVector::sepCompare(current_pos, record_pos, std::less<int>());
-        min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<int>());
-        eraseCrossHighlight();
+	    auto max_pos = PVector::sepCompare(current_pos, record_pos, std::greater<>());
+	    auto min_pos = PVector::sepCompare(current_pos, record_pos, std::less<>());
+        min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<>());
+        eraseLastCrossHighlight();
         eraseAreaHighlight();
 
         if (canAct(current_pos)) {
@@ -329,7 +363,7 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                 case GameWindow::TOOL_PAINT:
                     for (auto row = min_pos.row(); row <= max_pos.row(); row++) {
                         for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
-                            PVector pos(column, row);
+	                        const PVector pos(column, row);
                             if (canAct(pos)) {
                                 if (item(row, column)->backgroundColor() != DARK_COLOR) {
                                     record(pos, DARK_COLOR, EMPTY_SYMBOL);
@@ -338,8 +372,8 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                                 }
                                 item(row, column)->setBackgroundColor(DARK_COLOR);
                                 item(row, column)->setText(EMPTY_SYMBOL);
-                                nonogram_preview->updatePreview(pos, Qt::black);
-                                checkLineComplete(pos);
+                                nonogram_preview->updatePreview(pos, NonogramPreview::PRV_FILL);
+                                checkCrossComplete(pos);
                             }
                         }
                     }
@@ -347,7 +381,7 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                 case GameWindow::TOOL_ERASE:
                     for (auto row = min_pos.row(); row <= max_pos.row(); row++) {
                         for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
-                            PVector pos(column, row);
+	                        const PVector pos(column, row);
                             if (canAct(pos)) {
                                 if (item(row, column)->backgroundColor() != PRIMARY_COLOR
                                         || item(row, column)->text() != EMPTY_SYMBOL) {
@@ -357,8 +391,8 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                                 }
                                 item(row, column)->setBackgroundColor(PRIMARY_COLOR);
                                 item(row, column)->setText(EMPTY_SYMBOL);
-                                nonogram_preview->updatePreview(pos, Qt::white);
-                                checkLineComplete(pos);
+                                nonogram_preview->updatePreview(pos, NonogramPreview::PRV_NOFILL);
+                                checkCrossComplete(pos);
                             }
                         }
                     }
@@ -366,7 +400,7 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                 case GameWindow::TOOL_CROSS:
                     for (auto row = min_pos.row(); row <= max_pos.row(); row++) {
                         for (auto column = min_pos.column(); column <= max_pos.column(); column++) {
-                            PVector pos(column, row);
+	                        const PVector pos(column, row);
                             if (canAct(pos)) {
                                 if (item(row, column)->text() != CROSS_SYMBOL) {
                                     record(pos, PRIMARY_COLOR, CROSS_SYMBOL);
@@ -375,8 +409,8 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
                                 }
                                 item(row, column)->setBackgroundColor(PRIMARY_COLOR);
                                 item(row, column)->setText(CROSS_SYMBOL);
-                                nonogram_preview->updatePreview(pos, Qt::white);
-                                checkLineComplete(pos);
+                                nonogram_preview->updatePreview(pos, NonogramPreview::PRV_NOFILL);
+                                checkCrossComplete(pos);
                             }
                         }
                     }
@@ -388,6 +422,12 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
     }
 }
 
+/**
+ * \brief 记录一步操作
+ * \param pos 位置
+ * \param new_background_color 新的背景色
+ * \param new_text 新的文字
+ */
 void Nonogram::record(PVector pos, const QColor& new_background_color, const QString& new_text) {
     GameMove move;
     move.pos = pos;
@@ -401,6 +441,9 @@ void Nonogram::record(PVector pos, const QColor& new_background_color, const QSt
     GameController::setRedo(false);
 }
 
+/**
+ * \brief 撤销功能
+ */
 void Nonogram::undo() {
     auto current_move = undos.last();
     undos.pop_back();
@@ -409,15 +452,15 @@ void Nonogram::undo() {
 
     item(current_move.pos.row(), current_move.pos.column())->setBackgroundColor(current_move.old_background_color);
     item(current_move.pos.row(), current_move.pos.column())->setText(current_move.old_text);
-    QColor preview_color;
+    bool preview_fill = false;
     if (current_move.old_background_color == DARK_COLOR) {
-        preview_color = Qt::black;
+        preview_fill = NonogramPreview::PRV_FILL;
     } else if (current_move.old_background_color == PRIMARY_COLOR) {
-        preview_color = Qt::white;
+        preview_fill = NonogramPreview::PRV_NOFILL;
     }
-    nonogram_preview->updatePreview(current_move.pos, preview_color);
+    nonogram_preview->updatePreview(current_move.pos, preview_fill);
 
-    eraseCrossHighlight();
+    eraseLastCrossHighlight();
     if (undos.empty()) {
         GameController::setModified(false);
         GameController::setUndo(false);
@@ -426,10 +469,13 @@ void Nonogram::undo() {
         last_pos = current_move.pos;
     }
 
-    checkLineComplete(current_move.pos);
+    checkCrossComplete(current_move.pos);
     checkGameComplete();
 }
 
+/**
+ * \brief 重做功能
+ */
 void Nonogram::redo() {
     auto current_move = redos.last();
     redos.pop_back();
@@ -438,49 +484,52 @@ void Nonogram::redo() {
 
     item(current_move.pos.row(), current_move.pos.column())->setBackgroundColor(current_move.new_background_color);
     item(current_move.pos.row(), current_move.pos.column())->setText(current_move.new_text);
-    QColor preview_color;
+    bool preview_fill = false;
     if (current_move.new_background_color == DARK_COLOR) {
-        preview_color = Qt::black;
+        preview_fill = NonogramPreview::PRV_FILL;
     } else if (current_move.new_background_color == PRIMARY_COLOR) {
-        preview_color = Qt::white;
+        preview_fill = NonogramPreview::PRV_NOFILL;
     }
-    nonogram_preview->updatePreview(current_move.pos, preview_color);
+    nonogram_preview->updatePreview(current_move.pos, preview_fill);
 
-    eraseCrossHighlight();
+    eraseLastCrossHighlight();
     crossHighlight(current_move.pos);
     last_pos = current_move.pos;
     if (redos.empty()) {
         GameController::setRedo(false);
     }
 
-    checkLineComplete(current_move.pos);
+    checkCrossComplete(current_move.pos);
 }
 
+/**
+ * \brief 重置游戏
+ */
 void Nonogram::resetGame() {
     InfoWindow info(tr("是否重置游戏？您将丢失该网格画的全部进度！"), 2, this);
     const auto response = info.exec();
     if (response == QDialog::Accepted) {
-        eraseCrossHighlight();
+        eraseLastCrossHighlight();
 
         for (auto row = hint.top.size + 1; row < rowCount(); row++) {
             for (auto column = hint.left.size + 1; column < columnCount(); column++) {
                 if (item(row, column)->backgroundColor() != SECONDARY_SEPARATOR_COLOR) {
                     item(row, column)->setBackgroundColor(PRIMARY_COLOR);
                     item(row, column)->setText(EMPTY_SYMBOL);
-                    nonogram_preview->updatePreview(PVector(column, row), Qt::white);
+                    nonogram_preview->updatePreview(PVector(column, row), NonogramPreview::PRV_NOFILL);
                 }
             }
         }
         for (auto column = hint.left.size + 1; column < columnCount(); column++) {
-            PVector anchor(column, hint.top.size + 1);
+	        const PVector anchor(column, hint.top.size + 1);
             if (canAct(anchor)) {
-                checkLineComplete(anchor);
+                checkCrossComplete(anchor);
             }
         }
         for (auto row = hint.top.size + 1; row < rowCount(); row++) {
-            PVector anchor(hint.left.size + 1, row);
+	        const PVector anchor(hint.left.size + 1, row);
             if (canAct(anchor)) {
-                checkLineComplete(anchor);
+                checkCrossComplete(anchor);
             }
         }
 
@@ -496,7 +545,11 @@ void Nonogram::resetGame() {
     }
 }
 
-void Nonogram::checkLineComplete(PVector pos) {
+/**
+ * \brief 检查一行一列是否已经完成
+ * \param pos 位置
+ */
+void Nonogram::checkCrossComplete(PVector pos) {
     const auto row = readRow(pos.row());
     const auto column = readColumn(pos.column());
 
@@ -517,6 +570,9 @@ void Nonogram::checkLineComplete(PVector pos) {
     }
 }
 
+/**
+ * \brief 检查游戏是否完成
+ */
 void Nonogram::checkGameComplete() {
     complete = true;
     for (auto column = hint.left.size + 1; column < columnCount(); column++) {
@@ -538,7 +594,7 @@ void Nonogram::checkGameComplete() {
         setShowGrid(false);
         setMouseTracking(false);
         viewport()->setCursor(Qt::ArrowCursor);
-        eraseCrossHighlight();
+        eraseLastCrossHighlight();
         if (game_grid.column() * BLOCK_SIZE + 2 < minimumWidth()) {
             setMinimumWidth(game_grid.column() * BLOCK_SIZE + 2);
         }
@@ -570,7 +626,10 @@ void Nonogram::checkGameComplete() {
     }
 }
 
-void Nonogram::save() {
+/**
+ * \brief 保存游戏
+ */
+void Nonogram::save() const {
     std::ofstream fout(SAVE_NAME);
     fout << index << std::endl;
 
@@ -594,6 +653,10 @@ void Nonogram::save() {
     fout.close();
 }
 
+/**
+ * \brief 加载游戏
+ * \param fin 输入流
+ */
 void Nonogram::load(std::ifstream& fin) {
     for (auto row = hint.top.size + 1; row < rowCount(); row++) {
         for (auto column = hint.left.size + 1; column < columnCount(); column++) {
@@ -602,8 +665,8 @@ void Nonogram::load(std::ifstream& fin) {
             switch (state) {
                 case 1:
                     item(row, column)->setBackgroundColor(DARK_COLOR);
-                    nonogram_preview->updatePreview(PVector(column, row), Qt::black);
-                    checkLineComplete(PVector(column, row));
+                    nonogram_preview->updatePreview(PVector(column, row), NonogramPreview::PRV_FILL);
+                    checkCrossComplete(PVector(column, row));
                     break;
                 case 2:
                     item(row, column)->setText(CROSS_SYMBOL);
@@ -613,15 +676,28 @@ void Nonogram::load(std::ifstream& fin) {
     }
 }
 
-bool Nonogram::isComplete() {
+/**
+ * \brief 判断游戏是否结束
+ * \return 
+ */
+bool Nonogram::isComplete() const {
     return complete;
 }
 
-PVector Nonogram::getTableSize() {
+/**
+ * \brief 获取表格大小
+ * \return 
+ */
+PVector Nonogram::getTableSize() const {
     return table_size;
 }
 
-void Nonogram::colorHintRow(int row, QColor color) {
+/**
+ * \brief 为一行的提示上色
+ * \param row 行标
+ * \param color 颜色
+ */
+void Nonogram::colorHintRow(const int row, const QColor& color) {
     for (auto column = 0; column < hint.left.size; column++) {
         if (hint.left.data[column][row - (hint.top.size + 1)] != 0) {
             item(row, column)->setBackgroundColor(color);
@@ -629,7 +705,12 @@ void Nonogram::colorHintRow(int row, QColor color) {
     }
 }
 
-void Nonogram::colorHintColumn(int column, QColor color) {
+/**
+ * \brief 为一列的提示上色
+ * \param column 列标
+ * \param color 颜色
+ */
+void Nonogram::colorHintColumn(const int column, const QColor& color) {
     for (auto row = 0; row < hint.top.size; row++) {
         if (hint.top.data[row][column - (hint.left.size + 1)] != 0) {
             item(row, column)->setBackgroundColor(color);
@@ -637,14 +718,12 @@ void Nonogram::colorHintColumn(int column, QColor color) {
     }
 }
 
-void Nonogram::loadGameMeta() {
-    index = GameController::nonogram_index;
-    title = nonogram_data[index].title;
-    game_grid = nonogram_data[index].game_grid;
-    hint = nonogram_data[index].hint;
-}
-
-QVector<int> Nonogram::readRow(const int row) {
+/**
+ * \brief 读取一行游戏填充情况
+ * \param row 行标
+ * \return 
+ */
+QVector<int> Nonogram::readRow(const int row) const {
     QVector<int> data;
     auto tmp = 0;
     for (auto column = hint.left.size + 1; column < columnCount(); column++) {
@@ -663,7 +742,12 @@ QVector<int> Nonogram::readRow(const int row) {
     return data;
 }
 
-QVector<int> Nonogram::readColumn(const int column) {
+/**
+ * \brief 读取一列游戏填充情况
+ * \param column 列标
+ * \return 
+ */
+QVector<int> Nonogram::readColumn(const int column) const {
     QVector<int> data;
     auto tmp = 0;
     for (auto row = hint.top.size + 1; row < rowCount(); row++) {
@@ -682,6 +766,11 @@ QVector<int> Nonogram::readColumn(const int column) {
     return data;
 }
 
+/**
+ * \brief 读取一行提示
+ * \param row 行标
+ * \return 
+ */
 QVector<int> Nonogram::readHintRow(const int row) {
     QVector<int> data;
     for (auto column = 0; column < hint.left.size; column++) {
@@ -692,6 +781,11 @@ QVector<int> Nonogram::readHintRow(const int row) {
     return data;
 }
 
+/**
+ * \brief 读取一列提示
+ * \param column 列标
+ * \return 
+ */
 QVector<int> Nonogram::readHintColumn(const int column) {
     QVector<int> data;
     for (auto row = 0; row < hint.top.size; row++) {

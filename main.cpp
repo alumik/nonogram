@@ -10,10 +10,10 @@
  * \return
  */
 int main(int argc, char* argv[]) {
-    // 禁用高DPI缩放以免出现显示问题
+    // 禁用高 DPI 缩放以免出现显示问题
     QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 
-    // 创建QApplication实例
+    // 创建 QApplication 实例
     QApplication app(argc, argv);
 
     // 载入外部字体文件

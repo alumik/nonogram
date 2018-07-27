@@ -6,7 +6,7 @@
 #include "controller/controller_game.h"
 
 /**
- * \brief 关卡选择器
+ * \brief 关卡选择窗口构造函数
  * \param parent 父部件指针
  */
 LevelSelectorWindow::LevelSelectorWindow(QWidget* parent) : QWidget(parent) {

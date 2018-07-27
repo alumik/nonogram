@@ -7,16 +7,16 @@
 #include <QPropertyAnimation>
 
 /**
- * \brief 信息提示框
- * \param content 
- * \param btn_count 
- * \param parent 
+ * \brief 信息提示框构造函数
+ * \param content 信息内容
+ * \param btn_count 按钮数量
+ * \param parent 父部件指针
  */
 InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget* parent) : QDialog(parent) {
     // 设置窗口颜色
     GameController::setBackgroundColor(this, DARK_COLOR);
 
-    // 无边框模式
+    // 设置无边框模式
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
     // 失焦闪烁功能
@@ -31,6 +31,7 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget* par
     layout_btn = new QHBoxLayout();
     layout_btn->setSpacing(SPACING_SMALL);
 
+	// 根据按钮数量创建按钮
     switch (btn_count) {
         case 1:
             btn_control_1 = new MenuButton(tr("返回"), this, false);
@@ -70,6 +71,7 @@ InfoWindow::InfoWindow(const QString& content, const int btn_count, QWidget* par
     btn_control_1->setFixedSize(NAV_BUTTON_WIDTH - 5, BUTTON_HEIGHT - 5);
     connect(btn_control_1, &QPushButton::clicked, this, &InfoWindow::btnControl1Clicked);
 
+	// 创建布局
     layout_this = new QVBoxLayout();
     setLayout(layout_this);
     layout_this->addWidget(label_content, 0, Qt::AlignCenter);
@@ -101,7 +103,7 @@ void InfoWindow::btnControl3Clicked() {
 
 /**
  * \brief 移动无边框窗口
- * \param event 
+ * \param event 鼠标按下事件
  */
 void InfoWindow::mousePressEvent(QMouseEvent *event) {
     if (ReleaseCapture()) {
@@ -114,7 +116,7 @@ void InfoWindow::mousePressEvent(QMouseEvent *event) {
  * \brief 微调位置和淡入效果
  * 
  * 该函数未在非“1080p 100%缩放”的显示器上测试过，可能会出现显示问题
- * \param event 
+ * \param event 窗口显示事件
  */
 void InfoWindow::showEvent(QShowEvent *event) {
     QDialog::showEvent(event);
@@ -129,9 +131,9 @@ void InfoWindow::showEvent(QShowEvent *event) {
 
 /**
  * \brief 窗口失焦闪烁信号
- * \param event_type 
- * \param message 
- * \param result 
+ * \param event_type 事件类型
+ * \param message 事件内容
+ * \param result 事件结果
  * \return 
  */
 bool InfoWindow::nativeEvent(const QByteArray& event_type, void* message, long* result) {
@@ -144,7 +146,7 @@ bool InfoWindow::nativeEvent(const QByteArray& event_type, void* message, long* 
 
 /**
  * \brief 窗口失焦闪烁效果
- * \param active 
+ * \param active 窗口是否激活
  */
 void InfoWindow::flashWindow(const bool active) {
     if (active) {

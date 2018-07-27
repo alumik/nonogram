@@ -10,7 +10,7 @@
 #include <QPixmap>
 
 /**
- * \brief 游戏主窗口
+ * \brief 欢迎窗口构造函数
  * \param parent 父部件指针
  */
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
@@ -89,10 +89,10 @@ void MainWindow::showAbout() {
 }
 
 /**
- * \brief 显示网格画选择
+ * \brief 显示游戏选择窗口
  */
 void MainWindow::showLevelSelector() {
-    if (GameController::canLoadGame()) {
+    if (GameController::saveExists()) {
         InfoWindow info(tr("<center>您还有未完成的游戏<br>开始新游戏将删除现有游戏进度<br>是否继续？</center>"), 2, this);
         const auto response = info.exec();
         if (response == QDialog::Accepted) {
@@ -110,8 +110,11 @@ void MainWindow::onLoadGame() {
     GameController::loadGame();
 }
 
-void MainWindow::checkBtnLoad() {
-    btn_load->setDisabled(!GameController::canLoadGame());
+/**
+ * \brief 判断加载游戏按钮是否可用
+ */
+void MainWindow::checkBtnLoad() const {
+    btn_load->setDisabled(!GameController::saveExists());
 }
 
 /**

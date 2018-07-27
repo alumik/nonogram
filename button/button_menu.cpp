@@ -2,8 +2,14 @@
 #include "util/util_generic_define.h"
 #include "util/util_pixel_font.h"
 
+/**
+ * \brief 菜单按钮构造函数
+ * \param caption 按钮文字
+ * \param parent 父部件指针
+ * \param accent_color 是否上高亮色
+ */
 MenuButton::MenuButton(const QString& caption, QWidget* parent, const bool accent_color)
-    : QPushButton(caption, parent) {
+		: QPushButton(caption, parent) {
     setFont(PixelFont("Microsoft YaHei UI", BUTTON_FONT_SIZE, 75));
     setFocusPolicy(Qt::NoFocus);
     setFixedSize(BUTTON_WIDTH, BUTTON_HEIGHT);

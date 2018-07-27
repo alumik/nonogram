@@ -11,8 +11,8 @@ public:
     static GameWindow* game_window;
     static int nonogram_index;
 
-    static void setBackgroundColor(QWidget* widget, QColor color);
-    static bool canLoadGame();
+    static void setBackgroundColor(QWidget* widget, const QColor& color);
+    static bool saveExists();
     static void loadGame();
     static void startGame();
     static void setUndo(bool enable);

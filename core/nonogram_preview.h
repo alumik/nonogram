@@ -10,14 +10,17 @@ class NonogramPreview : public QTableWidget {
     Q_OBJECT
 
 public:
-    NonogramPreview(PVector _game_grid,
-                    PVector _hint_grid,
-                    PVector _separator,
+	static const bool PRV_FILL = true;
+	static const bool PRV_NOFILL = false;
+
+    NonogramPreview(PVector game_grid,
+                    PVector hint_grid,
+                    PVector separator,
                     QWidget* parent = nullptr);
-    void updatePreview(PVector pos, const QColor& color) const;
+    void updatePreview(PVector pos, bool fill) const;
 
 private:
-    PVector hint_grid;
+    PVector private_hint_grid;
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

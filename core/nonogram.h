@@ -26,10 +26,10 @@ public:
 
     explicit Nonogram(QWidget* parent = nullptr);
 
-    PVector getTableSize();
-    void save();
+    PVector getTableSize() const;
+    void save() const;
     void load(std::ifstream& fin);
-    bool isComplete();
+    bool isComplete() const;
 
 private:
     static const int NO_HINT = 0;
@@ -58,19 +58,18 @@ private:
 
     bool canAct(PVector pos) const;
     bool crossHighlight(PVector pos);
-    void eraseCrossHighlight();
+    void eraseLastCrossHighlight();
     void areaHighlight();
     void eraseAreaHighlight();
     void record(PVector pos, const QColor& new_background_color, const QString& new_text);
-    void checkLineComplete(PVector pos);
+    void checkCrossComplete(PVector pos);
     void checkGameComplete();
-    void loadGameMeta();
-    void colorHintRow(int row, QColor color);
-    void colorHintColumn(int column, QColor color);
-    QVector<int> readRow(const int row);
-    QVector<int> readColumn(const int column);
-    QVector<int> readHintRow(const int row);
-    QVector<int> readHintColumn(const int column);
+    void colorHintRow(int row, const QColor& color);
+    void colorHintColumn(int column, const QColor& color);
+    QVector<int> readRow(int row) const;
+    QVector<int> readColumn(int column) const;
+    QVector<int> readHintRow(int row);
+    QVector<int> readHintColumn(int column);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

@@ -1,12 +1,20 @@
 ﻿#include "button_tool.h"
 #include "util/util_generic_define.h"
 
+/**
+ * \brief 工具按钮构造函数
+ * \param icon 按钮图标
+ * \param tip 按钮提示
+ * \param parent 父部件指针
+ * \param checkable 是否可切换
+ * \param accent_color 是否上高亮色
+ */
 ToolButton::ToolButton(const QIcon& icon,
                        const QString& tip,
                        QWidget* parent,
                        const bool checkable,
                        const bool accent_color)
-    : QPushButton(parent) {
+		: QPushButton(parent) {
     setFixedSize(TOOL_BUTTON_SIZE);
     setFocusPolicy(Qt::NoFocus);
     setIcon(icon);

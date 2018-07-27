@@ -1,6 +1,9 @@
 ﻿#include "nonogram_data.h"
 
-NonogramData nonogram_data[5] = {
+/**
+ * \brief 网格画数据
+ */
+NonogramData global_nonogram_data[5] = {
     {
         0,
         QString("测试：拉里·奥布莱恩杯"),

@@ -22,6 +22,6 @@ struct NonogramData {
     Hint hint;
 };
 
-extern NonogramData nonogram_data[5];
+extern NonogramData global_nonogram_data[5];
 
 #endif // NONOGRAM_DATA_H

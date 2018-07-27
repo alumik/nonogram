@@ -17,7 +17,7 @@ public:
     ~StackedWindow();
 
     void setIndex(int index) const;
-    void checkBtnLoad();
+    void checkBtnLoad() const;
 
 private:
     MainWindow* main_window;

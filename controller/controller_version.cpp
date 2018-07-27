@@ -1,12 +1,27 @@
 ﻿#include "controller/controller_version.h"
 
-const QString VersionController::VERSION_NUMBER = QString("2.8.0.2");
-const QDate VersionController::BUILD_DATE = QLocale(QLocale::English).toDate(QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
-const QTime VersionController::BUILD_TIME = QTime::fromString(__TIME__, "hh:mm:ss");
-const bool VersionController::RELEASE_STATE = false;
+/**
+ * \brief 版本号
+ */
+const QString VersionController::VERSION_NUMBER = QString("2.8.0.3");
 
 /**
- * \brief 获取版本号
+ * \brief 编译日期
+ */
+const QDate VersionController::BUILD_DATE = QLocale(QLocale::English).toDate(QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
+
+/**
+ * \brief 编译时间
+ */
+const QTime VersionController::BUILD_TIME = QTime::fromString(__TIME__, "hh:mm:ss");
+
+/**
+ * \brief 发布状态
+ */
+const bool VersionController::RELEASE_STATE = true;
+
+/**
+ * \brief 获取版本号和 Build 数
  * \return
  */
 QString VersionController::getVersion() {
@@ -15,7 +30,7 @@ QString VersionController::getVersion() {
 }
 
 /**
- * \brief 获取编译时间
+ * \brief 获取编译日期和时间
  * \return
  */
 QString VersionController::getBulidDateTime() {

@@ -5,15 +5,14 @@
 #include "util/util_pixel_font.h"
 #include "controller/controller_game.h"
 
-#include <QPalette>
 #include <QIcon>
 #include <QScreen>
 #include <QGuiApplication>
 #include <cstdio>
 
 /**
- * \brief 游戏界面框架
- * \param parent
+ * \brief 游戏窗口构造函数
+ * \param parent 父部件指针
  */
 GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     // 判断能否回到主界面
@@ -39,6 +38,7 @@ GameWindow::GameWindow(QWidget* parent) : QWidget(parent) {
     icon_erase_checked = icon_tools.copy(96, 96, 96, 96);
     icon_cross_checked = icon_tools.copy(192, 96, 96, 96);
 
+	// 光标素材
     cursor_tools = QPixmap(":/cursor/cursor-tools");
     cursor_paint = cursor_tools.copy(3,3,23,23);
     cursor_erase = cursor_tools.copy(33,3,23,23);
@@ -202,7 +202,7 @@ bool GameWindow::eventFilter(QObject *obj, QEvent *event) {
 
 /**
  * \brief 询问是否要保存游戏
- * \param event
+ * \param event 窗口关闭事件
  */
 void GameWindow::closeEvent(QCloseEvent *event) {
     if (isWindowModified() && !game_widget->isComplete()) {
@@ -230,7 +230,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
 
 /**
  * \brief 游戏开始前智能调整窗口大小和位置
- * \param event
+ * \param event 窗口显示事件
  */
 void GameWindow::showEvent(QShowEvent* event) {
     QWidget::showEvent(event);
@@ -255,7 +255,7 @@ void GameWindow::showEvent(QShowEvent* event) {
 
 /**
  * \brief 游戏结束后调整界面显示
- * \param title
+ * \param title 网格画标题
  */
 void GameWindow::showComplete(const QString& title) {
     btn_help->setVisible(false);
@@ -275,7 +275,7 @@ void GameWindow::showComplete(const QString& title) {
     info.exec();
 }
 
-int GameWindow::getToolType() {
+int GameWindow::getToolType() const {
     return tool_type;
 }
 

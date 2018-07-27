@@ -3,7 +3,7 @@
 #include "window/window_stacked.h"
 
 /**
- * \brief 层叠式窗口
+ * \brief 层叠窗口构造函数
  * \param parent 父部件指针
  */
 StackedWindow::StackedWindow(QWidget* parent) : QWidget(parent) {
@@ -35,7 +35,10 @@ void StackedWindow::setIndex(const int index) const {
     layout_this->setCurrentIndex(index);
 }
 
-void StackedWindow::checkBtnLoad() {
+/**
+ * \brief 判断加载游戏按钮是否可用
+ */
+void StackedWindow::checkBtnLoad() const {
     main_window->checkBtnLoad();
 }
 

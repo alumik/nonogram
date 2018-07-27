@@ -13,7 +13,7 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-    void checkBtnLoad();
+    void checkBtnLoad() const;
 
 private:
     QLabel* label_icon;

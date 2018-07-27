@@ -1,8 +1,6 @@
 ﻿#ifndef UTIL_PVECTOR_H
 #define UTIL_PVECTOR_H
 
-#include <functional>
-
 class PVector {
     int xp;
     int yp;
@@ -13,7 +11,7 @@ public:
         yp = 0;
     }
 
-    PVector(int x, int y) {
+    PVector(const int x, const int y) {
         xp = x;
         yp = y;
     }
@@ -27,11 +25,11 @@ public:
     inline int& width();
     inline int& height();
 
-    friend inline const PVector operator+(const PVector& p1, const PVector& p2);
-    friend inline const PVector operator+(const PVector& p, int n);
-    friend inline const PVector operator*(const PVector& p, int factor);
-    friend inline const PVector operator*(int factor, const PVector& p);
-    friend inline const PVector operator/(const PVector& p, int divisor);
+    friend inline PVector operator+(const PVector& p1, const PVector& p2);
+    friend inline PVector operator+(const PVector& p, int n);
+    friend inline PVector operator*(const PVector& p, int factor);
+    friend inline PVector operator*(int factor, const PVector& p);
+    friend inline PVector operator/(const PVector& p, int divisor);
 
     friend inline bool operator==(const PVector& p1, const PVector& p2);
 
@@ -72,24 +70,24 @@ inline int& PVector::height() {
     return yp;
 }
 
-inline const PVector operator+(const PVector& p1, const PVector& p2) {
-    return PVector(p1.xp + p2.xp, p1.yp + p2.yp);
+inline PVector operator+(const PVector& p1, const PVector& p2) {
+	return { p1.xp + p2.xp, p1.yp + p2.yp };
 }
 
-inline const PVector operator+(const PVector& p, int n) {
-    return PVector(p.xp + n, p.yp + n);
+inline PVector operator+(const PVector& p, const int n) {
+	return { p.xp + n, p.yp + n };
 }
 
-inline const PVector operator*(const PVector& p, int factor) {
-    return PVector(p.xp * factor, p.yp * factor);
+inline PVector operator*(const PVector& p, const int factor) {
+	return { p.xp * factor, p.yp * factor };
 }
 
-inline const PVector operator*(int factor, const PVector& p) {
-    return PVector(p.xp * factor, p.yp * factor);
+inline PVector operator*(const int factor, const PVector& p) {
+	return { p.xp * factor, p.yp * factor };
 }
 
-inline const PVector operator/(const PVector& p, int divisor) {
-    return PVector(p.xp / divisor, p.yp / divisor);
+inline PVector operator/(const PVector& p, const int divisor) {
+	return { p.xp / divisor, p.yp / divisor };
 }
 
 inline bool operator==(const PVector& p1, const PVector& p2) {
