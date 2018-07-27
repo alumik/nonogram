@@ -1,7 +1,7 @@
 ﻿#ifndef WINDOW_MAIN_H
 #define WINDOW_MAIN_H
 
-#include "button_menu.h"
+#include "button/button_menu.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

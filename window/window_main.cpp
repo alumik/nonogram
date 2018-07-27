@@ -1,10 +1,10 @@
-﻿#include "window_main.h"
-#include "util_generic_define.h"
-#include "controller_version.h"
-#include "window_stacked.h"
-#include "window_info.h"
-#include "util_pixel_font.h"
-#include "controller_game.h"
+﻿#include "window/window_main.h"
+#include "util/util_generic_define.h"
+#include "controller/controller_version.h"
+#include "window/window_stacked.h"
+#include "window/window_info.h"
+#include "util/util_pixel_font.h"
+#include "controller/controller_game.h"
 
 #include <QApplication>
 #include <QPixmap>

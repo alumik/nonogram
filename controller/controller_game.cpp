@@ -1,5 +1,5 @@
-﻿#include "controller_game.h"
-#include "util_generic_define.h"
+﻿#include "controller/controller_game.h"
+#include "util/util_generic_define.h"
 
 #include <fstream>
 

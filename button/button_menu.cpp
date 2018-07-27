@@ -1,6 +1,6 @@
-﻿#include "button_menu.h"
-#include "util_generic_define.h"
-#include "util_pixel_font.h"
+﻿#include "button/button_menu.h"
+#include "util/util_generic_define.h"
+#include "util/util_pixel_font.h"
 
 MenuButton::MenuButton(const QString& caption, QWidget* parent, const bool accent_color)
     : QPushButton(caption, parent) {

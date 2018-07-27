@@ -41,5 +41,5 @@ CMakeLists.txt.user*
 *.ini
 
 # Custom
-tool_build_number.txt
-util_build_number.h
+tool/tool_build_number.txt
+util/util_build_number.h

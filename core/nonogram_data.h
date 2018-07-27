@@ -1,7 +1,7 @@
 ﻿#ifndef NONOGRAM_DATA_H
 #define NONOGRAM_DATA_H
 
-#include "util_pvector.h"
+#include "util/util_pvector.h"
 
 #include <QString>
 

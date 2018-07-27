@@ -1,7 +1,7 @@
 ﻿#ifndef WINDOW_INFO_H
 #define WINDOW_INFO_H
 
-#include "button_menu.h"
+#include "button/button_menu.h"
 
 #include <QDialog>
 #include <QLabel>
