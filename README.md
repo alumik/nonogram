@@ -1,8 +1,8 @@
-<h1 align="center">Nonogram</h1>
+# Nonogram
 
-项目基于 <a href="https://www.qt.io/">Qt</a> 框架制作。
+项目基于 [Qt](https://www.qt.io/) 框架制作。
 
-关于 Nonogram 游戏的介绍参见 <a href="https://en.wikipedia.org/wiki/Nonogram">Wikipedia</a> 。
+关于 Nonogram 游戏的介绍参见 [Wikipedia](https://en.wikipedia.org/wiki/Nonogram) 。
 
 ## 说明
 
@@ -19,4 +19,4 @@
 
 ## 已知 BUG
 
-1. 某些情况下，在游戏界面点击返回，会出现主界面弹出但不能前置显示的问题（藏在其他窗口后面）。此时手动最小化窗口再最大化窗口即可解决问题
+1. 某些情况下，在游戏界面点击返回，会出现主界面弹出但不能前置显示的问题（藏在其他窗口后面）。此时手动最小化窗口再最大化窗口即可解决问题。
