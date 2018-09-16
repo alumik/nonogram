@@ -6,9 +6,9 @@
 
 ## 说明
 
-1. `build_inc.bat` 用于更新 build 号，应在编译步骤最开始执行，否则 build 号不会更新。该文件工作目录应为 `%{CurrentProject:Path}/tool` 。
+1. *build_inc.bat* 用于更新 build 号，应在编译步骤最开始执行，否则 build 号不会更新。该文件工作目录应为 `%{CurrentProject:Path}/tool` 。
 
-2. `style` 目录下的 `styles` 文件夹需要放在 编译后的\*.exe 同级目录下，否则会出现样式错误。
+2. *style* 目录下的 *styles* 文件夹需要放在编译后的 \*.exe 同级目录下，否则会出现样式错误。
 
 3. 本程序采用 Qt 5.9.6 + MinGW 5.3.0 32bit 编译测试通过。由于文件编码问题，使用 MSVC 编译可能会出现中文不能正常显示的 BUG 。
 
