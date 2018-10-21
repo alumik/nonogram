@@ -3,7 +3,7 @@
 /**
  * \brief 版本号
  */
-const QString VersionController::VERSION_NUMBER = QString("2.8.0.3");
+const QString VersionController::VERSION_NUMBER = QString("2.8.0.4");
 
 /**
  * \brief 编译日期
