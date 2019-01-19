@@ -351,10 +351,10 @@ void Nonogram::mouseReleaseEvent(QMouseEvent* event) {
 	    auto max_pos = PVector::sepCompare(current_pos, record_pos, std::greater<>());
 	    auto min_pos = PVector::sepCompare(current_pos, record_pos, std::less<>());
         min_pos.sepCompare(PVector(hint.left.size, hint.top.size) + 1, std::greater<>());
-        eraseLastCrossHighlight();
-        eraseAreaHighlight();
 
         if (canAct(current_pos)) {
+            eraseLastCrossHighlight();
+            eraseAreaHighlight();
             crossHighlight(current_pos);
         }
 
