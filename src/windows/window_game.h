@@ -1,9 +1,9 @@
 ﻿#ifndef WINDOW_GAME_H
 #define WINDOW_GAME_H
 
-#include "core/nonogram.h"
-#include "button/button_tool.h"
-#include "button/button_menu.h"
+#include "src/core/nonogram.h"
+#include "src/buttons/button_tool.h"
+#include "src/buttons/button_menu.h"
 
 #include <QHBoxLayout>
 #include <QPixmap>

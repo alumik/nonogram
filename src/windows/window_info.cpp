@@ -1,7 +1,7 @@
-﻿#include "window/window_info.h"
-#include "util/util_generic_define.h"
-#include "util/util_pixel_font.h"
-#include "controller/controller_game.h"
+﻿#include "src/windows/window_info.h"
+#include "src/utils/util_generic_define.h"
+#include "src/utils/util_pixel_font.h"
+#include "src/controllers/controller_game.h"
 
 #include <windows.h>
 #include <QPropertyAnimation>

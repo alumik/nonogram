@@ -1,9 +1,9 @@
-﻿#include "controller/controller_version.h"
+﻿#include "src/controllers/controller_version.h"
 
 /**
  * \brief 版本号
  */
-const QString VersionController::VERSION_NUMBER = QString("2.8.1.0");
+const QString VersionController::VERSION_NUMBER = QString("2.8.2.0");
 
 /**
  * \brief 编译日期

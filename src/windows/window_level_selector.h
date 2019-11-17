@@ -1,7 +1,7 @@
 ﻿#ifndef WINDOW_LEVEL_SELECTOR_H
 #define WINDOW_LEVEL_SELECTOR_H
 
-#include "button/button_menu.h"
+#include "src/buttons/button_menu.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

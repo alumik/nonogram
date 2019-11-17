@@ -1,5 +1,5 @@
 ﻿#include "nonogram_preview.h"
-#include "util/util_generic_define.h"
+#include "src/utils/util_generic_define.h"
 
 #include <QHeaderView>
 

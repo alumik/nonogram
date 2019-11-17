@@ -1,7 +1,7 @@
 ﻿#ifndef NONOGRAM_PREVIEW_H
 #define NONOGRAM_PREVIEW_H
 
-#include "util/util_pvector.h"
+#include "src/utils/util_pvector.h"
 
 #include <QTableWidget>
 #include <QResizeEvent>

@@ -4,14 +4,17 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += \
+    core \
+    gui \
+    sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Nonogram
+TARGET = nonogram
 TEMPLATE = app
 
-VERSION = 2.8.1.0
+VERSION = 2.8.2.0
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -25,40 +28,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    button/button_menu.cpp \
-    button/button_tool.cpp \
-    controller/controller_game.cpp \
-    controller/controller_version.cpp \
-    core/nonogram.cpp \
-    core/nonogram_data.cpp \
-    core/nonogram_preview.cpp \
-    util/util_pixel_font.cpp \
-    window/window_game.cpp \
-    window/window_info.cpp \
-    window/window_level_selector.cpp \
-    window/window_main.cpp \
-    window/window_stacked.cpp \
-    main.cpp
+    src/buttons/button_menu.cpp \
+    src/buttons/button_tool.cpp \
+    src/controllers/controller_game.cpp \
+    src/controllers/controller_version.cpp \
+    src/core/nonogram.cpp \
+    src/core/nonogram_data.cpp \
+    src/core/nonogram_preview.cpp \
+    src/utils/util_pixel_font.cpp \
+    src/windows/window_game.cpp \
+    src/windows/window_info.cpp \
+    src/windows/window_level_selector.cpp \
+    src/windows/window_main.cpp \
+    src/windows/window_stacked.cpp \
+    src/main.cpp
 
 HEADERS += \
-    button/button_menu.h \
-    button/button_tool.h \
-    controller/controller_game.h \
-    controller/controller_version.h \
-    core/nonogram.h \
-    core/nonogram_data.h \
-    core/nonogram_preview.h \
-    util/util_build_number.h \
-    util/util_generic_define.h \
-    util/util_pixel_font.h \
-    util/util_pvector.h \
-    window/window_game.h \
-    window/window_info.h \
-    window/window_level_selector.h \
-    window/window_main.h \
-    window/window_stacked.h
+    src/buttons/button_menu.h \
+    src/buttons/button_tool.h \
+    src/controllers/controller_game.h \
+    src/controllers/controller_version.h \
+    src/core/nonogram.h \
+    src/core/nonogram_data.h \
+    src/core/nonogram_preview.h \
+    src/utils/util_build_number.h \
+    src/utils/util_generic_define.h \
+    src/utils/util_pixel_font.h \
+    src/utils/util_pvector.h \
+    src/windows/window_game.h \
+    src/windows/window_info.h \
+    src/windows/window_level_selector.h \
+    src/windows/window_main.h \
+    src/windows/window_stacked.h
 
-RC_ICONS = image\icon_game_dark.ico
+RC_ICONS = images\icon_game_dark.ico
 
 RESOURCES += \
     icon.qrc

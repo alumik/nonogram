@@ -1,8 +1,8 @@
-﻿#include "core/nonogram.h"
-#include "controller/controller_game.h"
-#include "util/util_generic_define.h"
-#include "util/util_pixel_font.h"
-#include "window/window_info.h"
+﻿#include "src/core/nonogram.h"
+#include "src/controllers/controller_game.h"
+#include "src/utils/util_generic_define.h"
+#include "src/utils/util_pixel_font.h"
+#include "src/windows/window_info.h"
 
 #include <QHeaderView>
 #include <fstream>

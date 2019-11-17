@@ -1,4 +1,4 @@
-﻿#include "controller/controller_game.h"
+﻿#include "src/controllers/controller_game.h"
 
 #include <QApplication>
 #include <QFontDatabase>

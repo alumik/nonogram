@@ -1,8 +1,8 @@
 ﻿#ifndef CONTROLLER_GAME_H
 #define CONTROLLER_GAME_H
 
-#include "window/window_stacked.h"
-#include "window/window_game.h"
+#include "src/windows/window_stacked.h"
+#include "src/windows/window_game.h"
 
 class GameController {
 

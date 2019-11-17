@@ -1,6 +1,6 @@
-﻿#include "controller/controller_game.h"
-#include "util/util_generic_define.h"
-#include "window/window_stacked.h"
+﻿#include "src/controllers/controller_game.h"
+#include "src/utils/util_generic_define.h"
+#include "src/windows/window_stacked.h"
 
 /**
  * \brief 层叠窗口构造函数

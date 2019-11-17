@@ -1,8 +1,8 @@
 ﻿#ifndef WINDOW_STACKED_H
 #define WINDOW_STACKED_H
 
-#include "window/window_main.h"
-#include "window/window_level_selector.h"
+#include "src/windows/window_main.h"
+#include "src/windows/window_level_selector.h"
 
 #include <QStackedLayout>
 

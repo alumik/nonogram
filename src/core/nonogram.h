@@ -1,9 +1,9 @@
 ﻿#ifndef NONOGRAM_H
 #define NONOGRAM_H
 
-#include "core/nonogram_preview.h"
-#include "core/nonogram_data.h"
-#include "util/util_pvector.h"
+#include "src/core/nonogram_preview.h"
+#include "src/core/nonogram_data.h"
+#include "src/utils/util_pvector.h"
 
 #include <QTableWidget>
 #include <QVector>
